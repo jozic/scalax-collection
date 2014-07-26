@@ -1,7 +1,6 @@
 import com.typesafe.sbt.SbtPgp.PgpKeys._
 import sbt.Keys._
 import sbt._
-import sbtrelease.ReleasePlugin.ReleaseKeys._
 import sbtrelease.ReleasePlugin._
 import sbtrelease.ReleaseStateTransformations._
 import sbtrelease.Utilities._
@@ -13,9 +12,11 @@ lazy val publishSignedAction: ReleaseStep = { st: State =>
   extracted.runAggregated(publishSigned in Global in ref, st)
 }
 
-releaseSettings
+ReleasePlugin.releaseSettings
 
-releaseProcess := Seq[ReleaseStep](
+ReleaseKeys.crossBuild := true
+
+ReleaseKeys.releaseProcess := Seq[ReleaseStep](
   checkSnapshotDependencies,
   inquireVersions,
   runClean,
