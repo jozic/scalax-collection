@@ -1,4 +1,4 @@
-import SonatypeKeys._
+import org.scoverage.coveralls.CoverallsPlugin.CoverallsKeys
 
 name := "scalax-collection"
 
@@ -19,6 +19,8 @@ sonatypeSettings
 instrumentSettings
 
 CoverallsPlugin.coverallsSettings
+
+CoverallsKeys.coverallsTokenFile := Some("./token.txt")
 
 ScoverageKeys.minimumCoverage := 70
 
