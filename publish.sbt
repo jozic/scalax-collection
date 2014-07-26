@@ -2,7 +2,7 @@ import xerial.sbt.Sonatype._
 
 sonatypeSettings
 
-def extraPom =
+pomExtra :=
   <url>http://github.com/jozic/scalax-collection</url>
     <licenses>
       <license>
