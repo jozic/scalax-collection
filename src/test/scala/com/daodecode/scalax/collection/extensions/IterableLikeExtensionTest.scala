@@ -2,6 +2,8 @@ package com.daodecode.scalax.collection.extensions
 
 import org.scalatest.Matchers
 
+import scala.collection.mutable.ListBuffer
+
 class IterableLikeExtensionTest extends org.scalatest.FlatSpec with Matchers {
 
   "foldLeftWhile" should "behave as regular foldLeft if while condition is true" in {
@@ -40,5 +42,9 @@ class IterableLikeExtensionTest extends org.scalatest.FlatSpec with Matchers {
     x should be(2)
   }
 
+  "toCompleteMap" should "group all values by keys" in {
+    List("1" -> "10", "2" -> "20", "1" -> "11").toCompleteMap should be(Map("1" -> List("10", "11"), "2" -> List("20")))
+    ListBuffer("1" -> "10", "2" -> "20", "1" -> "11").toCompleteMap should be(Map("1" -> ListBuffer("10", "11"), "2" -> ListBuffer("20")))
+  }
 
 }
