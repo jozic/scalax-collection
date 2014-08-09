@@ -8,7 +8,7 @@ package object extensions {
   /**
    * @define coll collection
    */
-  implicit class SeqLikeExtension[+A, +Repr](val seqLike: SeqLike[A, Repr]) extends AnyVal {
+  implicit class SeqLikeExtension[A, Repr](val seqLike: SeqLike[A, Repr]) extends AnyVal {
 
     /** Builds a new $coll from this $coll without any duplicate elements (as
       * determined by `==` after applying transforming function `f`).
@@ -16,7 +16,7 @@ package object extensions {
       * @return  A new $coll which contains the first occurrence of every element of this $coll.
       * @since 0.1.0
       */
-    def distinctBy[B, That](f: A => B)(implicit cbf: CanBuildFrom[Repr, A, That]): That = {
+    def distinctBy[B](f: A => B)(implicit cbf: CanBuildFrom[Repr, A, Repr]): Repr = {
       val b = cbf(seqLike.repr)
       val seen = mutable.HashSet[B]()
       for (x <- seqLike) {
@@ -33,7 +33,7 @@ package object extensions {
   /**
    * @define coll collection
    */
-  implicit class IterableLikeExtension[+A, +Repr <: IterableLike[A, Repr]](val iterableLike: IterableLike[A, Repr]) extends AnyVal {
+  implicit class IterableLikeExtension[A, Repr <: IterableLike[A, Repr]](val iterableLike: IterableLike[A, Repr]) extends AnyVal {
 
     /** Applies a binary operator to a start value and all elements of this $coll while predicate `p` is satisfied,
       * going left to right.
