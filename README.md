@@ -5,6 +5,31 @@ A small library of extension methods for standard scala collections library
 
 Released for scala 2.10 and scala 2.11
 
+## Examples
+
+### distinctBy
+
+``` scala
+scala> val xs = List(1 -> "one", 1 -> "ten", 2 -> "two", 2 -> "twenty").
+| distinctBy(_._1)
+xs: List[(Int, String)] = List((1,one), (2,two))
+```
+
+### foldLeftWhile/foldRightWhile
+``` scala
+scala> val xs = Iterable(List(1,2,3), List(4,5), List(6,7,8,9)).
+| foldLeftWhile(List.empty[Int])(_.size < 4){ case (acc, l) => acc ++ l }
+xs: List[Int] = List(1, 2, 3, 4, 5)
+```
+
+### toCompleteMap
+
+``` scala
+scala> val cm = List(1 -> "1", 2 -> "2", 1 -> "11").toCompleteMap
+cm: scala.collection.immutable.Map[Int,List[String]] = Map(2 -> List(2), 1 -> List(1, 11))
+
+```
+
 ##Latest stable release
 
 ### sbt
