@@ -13,6 +13,12 @@ package object extensions {
     /** Builds a new $coll from this $coll without any duplicate elements (as
       * determined by `==` after applying transforming function `f`).
       *
+      * Example:
+      * {{{
+      *   scala> val xs = List(1 -> "one", 1 -> "ten", 2 -> "two", 2 -> "twenty").distinctBy(_._1)
+      *   xs: List[(Int, String)] = List((1,one), (2,two))
+      * }}}
+      *
       * @return  A new $coll which contains the first occurrence of every element of this $coll.
       * @since 0.1.0
       */
@@ -38,11 +44,18 @@ package object extensions {
     /** Applies a binary operator to a start value and all elements of this $coll while predicate `p` is satisfied,
       * going left to right.
       *
+      * Example:
+      * {{{
+      *   scala> val xs = Iterable(List(1,2,3), List(4,5), List(6,7,8,9)).
+      *   | foldLeftWhile(List.empty[Int])(_.size < 4){ case (acc, l) => acc ++ l }
+      *   xs: List[Int] = List(1, 2, 3, 4, 5)
+      * }}}
+      *
       * @param   z    the start value.
       * @param   p    the predicate used to test if folding should continue.
       * @param   op   the binary operator.
       * @tparam  B    the result type of the binary operator.
-      * @return  the result of inserting `op` between consecutive elements of this $coll,
+      * @return  the result of inserting `op` between consecutive elements of this $coll while predicate `p` is satisfied,
       *          going left to right with the start value `z` on the left.
       * @since 0.1.0
       */
@@ -59,11 +72,18 @@ package object extensions {
     /** Applies a binary operator to all elements of this $coll and a start value while predicate `p` is satisfied,
       * going right to left.
       *
+      * Example:
+      * {{{
+      *   scala> val xs = Iterable(List(1,2,3), List(4,5), List(6,7,8,9)).
+      *   | foldRightWhile(List.empty[Int])(_.size < 5){ case (l, acc) =>  l ::: acc }
+      *   xs: List[Int] = List(4, 5, 6, 7, 8, 9)
+      * }}}
+      *
       * @param   z    the start value.
       * @param   p    the predicate used to test if folding should continue.
       * @param   op   the binary operator.
       * @tparam  B    the result type of the binary operator.
-      * @return  the result of inserting `op` between consecutive elements of this $coll,
+      * @return  the result of inserting `op` between consecutive elements of this $coll while predicate `p` is satisfied,
       *          going right to left with the start value `z` on the right.
       * @since 0.1.0
       */
@@ -83,8 +103,8 @@ package object extensions {
      *
      * Example:
      * {{{
-     * scala> val cm = List(1 -> "1", 2 -> "2", 1 -> "11").toCompleteMap
-     * cm: scala.collection.immutable.Map[Int,List[String]] = Map(2 -> List(2), 1 -> List(1, 11))
+     *   scala> val cm = List(1 -> "1", 2 -> "2", 1 -> "11").toCompleteMap
+     *   cm: scala.collection.immutable.Map[Int,List[String]] = Map(2 -> List(2), 1 -> List(1, 11))
      * }}}
      *
      * @return a map of type `immutable.Map[K, That]` where `That` is a $coll of `V`
