@@ -37,7 +37,7 @@ cm: scala.collection.immutable.Map[Int,List[String]] = Map(2 -> List(2), 1 -> Li
 libraryDependencies += "com.daodecode" %% "scalax-collection" % "0.1.0"
 ```
 ### maven
-```
+``` xml
 <dependency>
     <groupId>com.daodecode</groupId>
     <artifactId>scalax-collection_2.10</artifactId>
@@ -45,7 +45,7 @@ libraryDependencies += "com.daodecode" %% "scalax-collection" % "0.1.0"
 </dependency>
 ```
 or
-```
+``` xml
 <dependency>
     <groupId>com.daodecode</groupId>
     <artifactId>scalax-collection_2.11</artifactId>
@@ -63,7 +63,7 @@ First add sonatype snapshots repository to your settings
 
 ### maven
 
-```
+``` xml
 <repository>
     <id>snapshots-repo</id>
     <url>https://oss.sonatype.org/content/repositories/snapshots</url>
@@ -79,7 +79,7 @@ then add snapshot as a dependency
 libraryDependencies += "com.daodecode" %% "scalax-collection" % "0.1.1-SNAPSHOT"
 ```
 ### maven
-```
+``` xml
 <dependency>
     <groupId>com.daodecode</groupId>
     <artifactId>scalax-collection_2.10</artifactId>
@@ -87,7 +87,7 @@ libraryDependencies += "com.daodecode" %% "scalax-collection" % "0.1.1-SNAPSHOT"
 </dependency>
 ```
 or
-```
+``` xml
 <dependency>
     <groupId>com.daodecode</groupId>
     <artifactId>scalax-collection_2.11</artifactId>
