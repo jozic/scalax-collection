@@ -27,7 +27,13 @@ xs: List[Int] = List(1, 2, 3, 4, 5)
 ``` scala
 scala> val cm = List(1 -> "1", 2 -> "2", 1 -> "11").toCompleteMap
 cm: scala.collection.immutable.Map[Int,List[String]] = Map(2 -> List(2), 1 -> List(1, 11))
+```
 
+### withFrequency
+
+``` scala
+scala> val fm = List("a", "b", "c", "a", "b", "d").withFrequency
+fm: scala.collection.immutable.Map[String,Int] = Map(b -> 2, d -> 1, a -> 2, c -> 1)
 ```
 
 ##Latest stable release
