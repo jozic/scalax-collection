@@ -12,7 +12,7 @@ class SeqLikeExtensionTest extends org.scalatest.FlatSpec with Matchers {
   val eugeneM = Person("Eugene", "Medvediev", 31)
   val vasiliy = Person("Vasiliy", "Platonov", 2)
 
-  "distinctBy" should "keep only unique elements based on transforming function" in {
+  "distinctBy" should "keep only first unique element based on transforming function" in {
     val people = Seq(eugeneP, xeniya, eugeneM, vasiliy)
 
     people.distinctBy(_.fName) should be(Seq(eugeneP, xeniya, vasiliy))
@@ -36,5 +36,12 @@ class SeqLikeExtensionTest extends org.scalatest.FlatSpec with Matchers {
 
     assertEvaluateOnlyOnce(Seq.empty[Person])
     assertEvaluateOnlyOnce(Stream.empty[Person])
+  }
+
+  it should "respect selector if one is provided" in {
+    val people = Seq(eugeneM, xeniya, eugeneP, vasiliy)
+
+    people.distinctBy(_.fName) should be(Seq(eugeneM, xeniya, vasiliy))
+    people.distinctBy(_.fName, (p1, p2) => p1.lName == "Platonov") should be(Seq(eugeneP, xeniya, vasiliy))
   }
 }

@@ -9,10 +9,18 @@ Released for scala 2.10 and scala 2.11
 
 ### distinctBy
 
+preserving first duplicate
 ``` scala
 scala> val xs = List(1 -> "one", 1 -> "ten", 2 -> "two", 2 -> "twenty").
 | distinctBy(_._1)
 xs: List[(Int, String)] = List((1,one), (2,two))
+```
+
+or preserving any duplicate you want
+``` scala
+scala> val xs = List(1 -> "one", 1 -> "ten", 2 -> "two", 2 -> "twenty").
+| distinctBy(_._1, takeFirst = _._2.length > _._2.length)
+xs: List[(Int, String)] = List((1,ten), (2,twenty))
 ```
 
 ### foldLeftWhile/foldRightWhile

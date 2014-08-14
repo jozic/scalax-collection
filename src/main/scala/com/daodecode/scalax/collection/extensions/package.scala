@@ -12,6 +12,7 @@ package object extensions {
 
     /** Builds a new $coll from this $coll without any duplicate elements (as
       * determined by `==` after applying transforming function `f`).
+      * First of all the duplicates is preserved
       *
       * Example:
       * {{{
@@ -22,17 +23,34 @@ package object extensions {
       * @return  A new $coll which contains the first occurrence of every element of this $coll.
       * @since 0.1.0
       */
-    def distinctBy[B](f: A => B)(implicit cbf: CanBuildFrom[Repr, A, Repr]): Repr = {
-      val b = cbf(seqLike.repr)
-      val seen = mutable.HashSet[B]()
+    def distinctBy[B](f: A => B)(implicit cbf: CanBuildFrom[Repr, A, Repr]): Repr =
+      distinctBy(f, (_, _) => true)(cbf)
+
+    /** Builds a new $coll from this $coll without any duplicate elements (as
+      * determined by `==` after applying transforming function `f`).
+      * Function `takeFirst` defines which of duplicates will be preserved.
+      * If it returns `true` first of compared duplicates will be kept, second one otherwise.
+      *
+      * Example:
+      * {{{
+      *   scala> val xs = List(1 -> "one", 1 -> "ten", 2 -> "two", 2 -> "twenty").
+      *   | distinctBy(_._1, takeFirst = _._2.length > _._2.length)
+      *   xs: List[(Int, String)] = List((1,ten), (2,twenty))
+      * }}}
+      *
+      * @return  A new $coll which contains selected occurrence of every element of this $coll.
+      * @since 0.1.1
+      */
+    def distinctBy[B](f: A => B, takeFirst: (A, A) => Boolean)(implicit cbf: CanBuildFrom[Repr, A, Repr]): Repr = {
+      val seen = mutable.LinkedHashMap.empty[B, A]
       for (x <- seqLike) {
         val fx = f(x)
-        if (!seen(fx)) {
-          b += x
-          seen += fx
+        seen.get(fx) match {
+          case Some(a) => seen += fx -> (if (takeFirst(a, x)) a else x)
+          case _ => seen += fx -> x
         }
       }
-      b.result()
+      (cbf(seqLike.repr) ++= seen.values).result()
     }
   }
 
