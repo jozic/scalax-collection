@@ -48,14 +48,14 @@ fm: scala.collection.immutable.Map[String,Int] = Map(b -> 2, d -> 1, a -> 2, c -
 
 ### sbt
 ```
-libraryDependencies += "com.daodecode" %% "scalax-collection" % "0.1.0"
+libraryDependencies += "com.daodecode" %% "scalax-collection" % "0.1.1"
 ```
 ### maven
 ``` xml
 <dependency>
     <groupId>com.daodecode</groupId>
     <artifactId>scalax-collection_2.10</artifactId>
-    <version>0.1.0</version>
+    <version>0.1.1</version>
 </dependency>
 ```
 or
@@ -63,7 +63,7 @@ or
 <dependency>
     <groupId>com.daodecode</groupId>
     <artifactId>scalax-collection_2.11</artifactId>
-    <version>0.1.0</version>
+    <version>0.1.1</version>
 </dependency>
 ```
 
@@ -90,14 +90,14 @@ then add snapshot as a dependency
 
 ### sbt
 ```
-libraryDependencies += "com.daodecode" %% "scalax-collection" % "0.1.1-SNAPSHOT"
+libraryDependencies += "com.daodecode" %% "scalax-collection" % "0.1.2-SNAPSHOT"
 ```
 ### maven
 ``` xml
 <dependency>
     <groupId>com.daodecode</groupId>
     <artifactId>scalax-collection_2.10</artifactId>
-    <version>0.1.1-SNAPSHOT</version>
+    <version>0.1.2-SNAPSHOT</version>
 </dependency>
 ```
 or
@@ -105,6 +105,6 @@ or
 <dependency>
     <groupId>com.daodecode</groupId>
     <artifactId>scalax-collection_2.11</artifactId>
-    <version>0.1.1-SNAPSHOT</version>
+    <version>0.1.2-SNAPSHOT</version>
 </dependency>
 ```
