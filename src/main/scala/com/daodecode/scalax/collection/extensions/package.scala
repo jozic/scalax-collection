@@ -2,6 +2,7 @@ package com.daodecode.scalax.collection
 
 import scala.collection._
 import scala.collection.generic.CanBuildFrom
+import scala.collection.mutable.MapBuilder
 
 package object extensions {
 
@@ -166,5 +167,38 @@ package object extensions {
 
   }
 
-}
+  implicit class MapLikeExtension[K, V, Repr <: MapLike[K, V, Repr] with Map[K, V]]
+  (val mapLike: MapLike[K, V, Repr]) extends AnyVal {
 
+    /**
+     * Merges this map with `another` using function `f`
+     * to calculate result value for duplicate keys.
+     * Value from this map is the first argument to `f`
+     *
+     * Returns a new map with all keys present in this and `another` maps
+     * The type of result map is same as this map
+     *
+     * Example:
+     * {{{
+     *   scala> val merged = Map("1" -> 1, "2" -> 2).mergedWith(Map("1" -> 1, "2" -> 2))(_ + _)
+     *   merged: scala.collection.immutable.Map[String,Int] = Map(1 -> 2, 2 -> 4)
+     * }}}
+     *
+     * @since 0.1.2
+     *
+     */
+    def mergedWith(another: Map[K, V])(f: (V, V) => V): Repr =
+      if (another.isEmpty) mapLike.asInstanceOf[Repr]
+      else {
+        val mapBuilder = new mutable.MapBuilder[K, V, Repr](mapLike.asInstanceOf[Repr])
+        another.foreach { case (k, v) =>
+          mapLike.get(k) match {
+            case Some(ev) => mapBuilder += k -> f(ev, v)
+            case _ => mapBuilder += k -> v
+          }
+        }
+        mapBuilder.result()
+      }
+  }
+
+}
