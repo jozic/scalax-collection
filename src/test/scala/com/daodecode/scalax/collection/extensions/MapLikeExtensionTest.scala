@@ -21,8 +21,8 @@ class MapLikeExtensionTest extends FlatSpec with Matchers {
     val mutableMap = mutable.Map("1" -> 1, "2" -> 2)
     val immutableMap = immutable.Map("1" -> 1, "2" -> 2)
 
-    immutableMap.mergedWith(mutableMap)(_ + _) should be(an[immutable.Map[String, Int]])
-    mutableMap.mergedWith(immutableMap)(_ + _) should be(a[mutable.Map[String, Int]])
+    immutableMap.mergedWith(mutableMap)(_ + _) should be(an[immutable.Map[_, _]])
+    mutableMap.mergedWith(immutableMap)(_ + _) should be(a[mutable.Map[_, _]])
 
     mutableMap should be(Map("1" -> 1, "2" -> 2))
 

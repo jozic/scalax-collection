@@ -4,12 +4,12 @@ organization := "com.daodecode"
 
 scalaVersion := "2.10.4"
 
-crossScalaVersions := Seq("2.10.4", "2.11.2")
+crossScalaVersions := Seq("2.10.4", "2.11.5")
 
 scalacOptions ++= Seq("-deprecation", "-unchecked", "-Xlint", "-Xfatal-warnings")
 
 javacOptions ++= Seq("-source", "1.6", "-target", "1.6")
 
-libraryDependencies += "org.scalatest" %% "scalatest" % "2.1.6" % "test"
+libraryDependencies += "org.scalatest" %% "scalatest" % "2.2.2" % "test"
 
 initialCommands in console := "import com.daodecode.scalax.collection.extensions._"
