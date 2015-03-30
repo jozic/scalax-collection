@@ -59,6 +59,7 @@ merged: scala.collection.immutable.Map[String,Int] = Map(1 -> 2, 2 -> 4)
 libraryDependencies += "com.daodecode" %% "scalax-collection" % "0.1.1"
 ```
 ### maven
+#### scala 2.10 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.daodecode/scalax-collection_2.10/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.daodecode/scalax-collection_2.10)
 ``` xml
 <dependency>
     <groupId>com.daodecode</groupId>
@@ -67,6 +68,8 @@ libraryDependencies += "com.daodecode" %% "scalax-collection" % "0.1.1"
 </dependency>
 ```
 or
+#### scala 2.11 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.daodecode/scalax-collection_2.11/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.daodecode/scalax-collection_2.11)
+
 ``` xml
 <dependency>
     <groupId>com.daodecode</groupId>
