@@ -52,6 +52,28 @@ scala> val merged = Map("1" -> 1, "2" -> 2).mergedWith(Map("1" -> 1, "2" -> 2))(
 merged: scala.collection.immutable.Map[String,Int] = Map(1 -> 2, 2 -> 4)
 ```
 
+### minOption/minOptionBy
+
+Finds the smallest element wrapped in `Option` or `None` if iterable is empty
+``` scala
+scala> val m = List.empty[Int].minOption
+m: Option[Int] = None
+
+scala> val m = List(1,2,1).minOptionBy(_ * -1)
+m: Option[Int] = Some(2)
+```
+
+### maxOption/maxOptionBy
+
+Finds the largest element wrapped in `Option` or `None` if iterable is empty
+``` scala
+scala> val m = List.empty[Int].maxOption
+m: Option[Int] = None
+
+scala> val m = List(1,2,1).maxOptionBy(_ * -1)
+m: Option[Int] = Some(1)
+```
+
 ##Latest stable release
 
 ### sbt

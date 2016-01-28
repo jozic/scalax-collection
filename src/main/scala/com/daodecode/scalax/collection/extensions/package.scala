@@ -7,7 +7,7 @@ import scala.collection.mutable.MapBuilder
 package object extensions {
 
   /**
-   * @define coll collection
+   * @define coll sequence
    */
   implicit class SeqLikeExtension[A, Repr](val seqLike: SeqLike[A, Repr]) extends AnyVal {
 
@@ -56,7 +56,7 @@ package object extensions {
   }
 
   /**
-   * @define coll collection
+   * @define coll iterable
    */
   implicit class IterableLikeExtension[A, Repr <: IterableLike[A, Repr]](val iterableLike: IterableLike[A, Repr]) extends AnyVal {
 
@@ -127,8 +127,7 @@ package object extensions {
      * }}}
      *
      * @return a map of type `immutable.Map[K, That]` where `That` is a $coll of `V`
-     *
-     * @since 0.1.1
+      * @since 0.1.1
      **/
     def toCompleteMap[K, V, That](implicit ev: A <:< (K, V), cbf: CanBuildFrom[Repr, V, That]): immutable.Map[K, That] = {
       val m = mutable.Map.empty[K, mutable.Builder[V, That]]
@@ -144,7 +143,7 @@ package object extensions {
 
     /**
      * Creates a new immutable `Map` with unique elements of this $coll as keys and
-     * count of duplicates ((as determined by `==`) (frequency) as values
+     * count of duplicates ((as determined by `==`) (frequency) as values.
      *
      * Example:
      * {{{
@@ -153,8 +152,7 @@ package object extensions {
      * }}}
      *
      * @return a map of type immutable.Map[A, Int] where Int represents a frequency of key A in original $coll
-     *
-     * @since 0.1.1
+      * @since 0.1.1
      */
     def withFrequency: immutable.Map[A, Int] = {
       val m = mutable.Map.empty[A, Int]
@@ -164,6 +162,98 @@ package object extensions {
       }
       m.toMap
     }
+
+    /**
+      * Finds the largest element wrapped in `Option` or `None` if $coll is empty
+      *
+      * Example:
+      * {{{
+      *   scala> val m = List(1,2,1).maxOption
+      *   m: Option[Int] = Some(2)
+      *
+      *   scala> val m = List.empty[Int].maxOption
+      *   m: Option[Int] = None
+      * }}}
+      *
+      * @param ord An ordering to be used for comparing elements.
+      * @tparam B The type over which the ordering is defined.
+      * @return the largest element wrapped in `Option` or `None` if $coll is empty
+      * @since 0.1.2
+      *
+      */
+    def maxOption[B >: A](implicit ord: Ordering[B]): Option[A] =
+      if (iterableLike.isEmpty) None
+      else Some(iterableLike.max[B])
+
+
+    /**
+      * Finds the smallest element wrapped in `Option` or `None` if $coll is empty.
+      *
+      * Example:
+      * {{{
+      *   scala> val m = List(1,2,1).minOption
+      *   m: Option[Int] = Some(1)
+      *
+      *   scala> val m = List.empty[Int].minOption
+      *   m: Option[Int] = None
+      * }}}
+      *
+      * @param ord An ordering to be used for comparing elements.
+      * @tparam B The type over which the ordering is defined.
+      * @return the smallest element wrapped in `Option` or `None` if $coll is empty
+      * @since 0.1.2
+      */
+    def minOption[B >: A](implicit ord: Ordering[B]): Option[A] =
+      if (iterableLike.isEmpty) None
+      else Some(iterableLike.min[B])
+
+    /**
+      * Finds the element where function `f` returns largest value according to `ord`.
+      * Returns result wrapped in `Option` or `None` if $coll is empty.
+      *
+      * Example:
+      * {{{
+      *   scala> val m = List(1,2,1).maxOptionBy(_ * -1)
+      *   m: Option[Int] = Some(1)
+      *
+      *   scala> val m = List.empty[Int].maxOptionBy(_ * -1)
+      *   m: Option[Int] = None
+      * }}}
+      *
+      * @param f Transforming function that applied to elements produces results to be compared.
+      * @param ord An ordering to be used for comparing elements.
+      * @tparam B The type over which the ordering is defined.
+      * @return the largest element (as identified by `ord` after applying `f`)
+      *         wrapped in `Option` or `None` if $coll is empty
+      * @since 0.1.2
+      */
+    def maxOptionBy[B >: A](f: A => B)(implicit ord: Ordering[B]): Option[A] =
+      if (iterableLike.isEmpty) None
+      else Some(iterableLike.maxBy(f))
+
+    /**
+      * Finds the element where function `f` returns smallest value according to `ord`.
+      * Returns result wrapped in `Option` or `None` if $coll is empty.
+      *
+      * Example:
+      * {{{
+      *   scala> val m = List(1,2,1).minOptionBy(_ * -1)
+      *   m: Option[Int] = Some(2)
+      *
+      *   scala> val m = List.empty[Int].minOptionBy(_ * -1)
+      *   m: Option[Int] = None
+      * }}}
+      *
+      * @param f Transforming function that applied to elements produces results to be compared.
+      * @param ord An ordering to be used for comparing elements.
+      * @tparam B The type over which the ordering is defined.
+      * @return the smallest element (as identified by `ord` after applying `f`)
+      *         wrapped in `Option` or `None` if $coll is empty
+      * @since 0.1.2
+      */
+    def minOptionBy[B >: A](f: A => B)(implicit ord: Ordering[B]): Option[A] =
+      if (iterableLike.isEmpty) None
+      else Some(iterableLike.minBy(f))
 
   }
 

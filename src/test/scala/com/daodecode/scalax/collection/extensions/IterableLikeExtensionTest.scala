@@ -1,10 +1,10 @@
 package com.daodecode.scalax.collection.extensions
 
-import org.scalatest.Matchers
+import org.scalatest.{FlatSpec, Matchers}
 
 import scala.collection.mutable.ListBuffer
 
-class IterableLikeExtensionTest extends org.scalatest.FlatSpec with Matchers {
+class IterableLikeExtensionTest extends FlatSpec with Matchers {
 
   "foldLeftWhile" should "behave as regular foldLeft if while condition is true" in {
 
@@ -57,6 +57,38 @@ class IterableLikeExtensionTest extends org.scalatest.FlatSpec with Matchers {
 
   it should "return empty map if source is empty" in {
     List.empty[String].withFrequency should be(Map[String, Int]())
+  }
+
+  "minOption" should "return None if iterable is empty" in {
+    Iterable.empty[Int].minOption should be(None)
+  }
+
+  it should "return smallest element wrapped in Option if ietrable is not empty" in {
+    Iterable(2, 1, 3).minOption should be(Some(1))
+  }
+
+  "minOptionBy" should "return None if iterable is empty" in {
+    Iterable.empty[Int].minOptionBy(_ * -1) should be(None)
+  }
+
+  it should "return smallest element wrapped in Option if ietrable is not empty" in {
+    Iterable(2, 1, 3).minOptionBy(_ * -1) should be(Some(3))
+  }
+
+  "maxOption" should "return None if iterable is empty" in {
+    Iterable.empty[Int].maxOption should be(None)
+  }
+
+  it should "return largest element wrapped in Option if ietrable is not empty" in {
+    Iterable(2, 1, 3).maxOption should be(Some(3))
+  }
+
+  "maxOptionBy" should "return None if iterable is empty" in {
+    Iterable.empty[Int].maxOptionBy(_ * -1) should be(None)
+  }
+
+  it should "return largest element wrapped in Option if ietrable is not empty" in {
+    Iterable(2, 1, 3).maxOptionBy(_ * -1) should be(Some(1))
   }
 
 }

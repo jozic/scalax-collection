@@ -3,7 +3,7 @@ import scoverage.ScoverageSbtPlugin._
 
 CoverallsKeys.coverallsTokenFile := Some("./token.txt")
 
-ScoverageKeys.coverageMinimum := 70
+ScoverageKeys.coverageMinimum := 95
 
 ScoverageKeys.coverageFailOnMinimum := true
 
