@@ -1,15 +1,11 @@
-import com.typesafe.sbt.SbtPgp.PgpKeys._
-import sbtrelease.ReleasePlugin._
 import sbtrelease.ReleaseStateTransformations._
 import sbtrelease._
 
-ReleasePlugin.releaseSettings
+releaseCrossBuild := true
 
-ReleaseKeys.crossBuild := true
+releasePublishArtifactsAction := PgpKeys.publishSigned.value
 
-ReleaseKeys.publishArtifactsAction := publishSigned.value
-
-ReleaseKeys.releaseProcess := Seq[ReleaseStep](
+releaseProcess := Seq[ReleaseStep](
   checkSnapshotDependencies,
   inquireVersions,
   runClean,
@@ -20,5 +16,6 @@ ReleaseKeys.releaseProcess := Seq[ReleaseStep](
   publishArtifacts,
   setNextVersion,
   commitNextVersion,
+  ReleaseStep(action = Command.process("sonatypeReleaseAll", _)),
   pushChanges
 )

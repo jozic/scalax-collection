@@ -1,5 +1,5 @@
 import org.scoverage.coveralls.CoverallsPlugin._
-import scoverage.ScoverageSbtPlugin._
+import scoverage._
 
 CoverallsKeys.coverallsTokenFile := Some("./token.txt")
 
