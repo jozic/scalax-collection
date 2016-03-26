@@ -78,7 +78,7 @@ m: Option[Int] = Some(1)
 
 ### sbt
 ```
-libraryDependencies += "com.daodecode" %% "scalax-collection" % "0.1.1"
+libraryDependencies += "com.daodecode" %% "scalax-collection" % "0.1.2"
 ```
 ### maven
 #### scala 2.10 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.daodecode/scalax-collection_2.10/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.daodecode/scalax-collection_2.10)
@@ -86,7 +86,7 @@ libraryDependencies += "com.daodecode" %% "scalax-collection" % "0.1.1"
 <dependency>
     <groupId>com.daodecode</groupId>
     <artifactId>scalax-collection_2.10</artifactId>
-    <version>0.1.1</version>
+    <version>0.1.2</version>
 </dependency>
 ```
 or
@@ -96,7 +96,7 @@ or
 <dependency>
     <groupId>com.daodecode</groupId>
     <artifactId>scalax-collection_2.11</artifactId>
-    <version>0.1.1</version>
+    <version>0.1.2</version>
 </dependency>
 ```
 
@@ -123,14 +123,14 @@ then add snapshot as a dependency
 
 ### sbt
 ```
-libraryDependencies += "com.daodecode" %% "scalax-collection" % "0.1.2-SNAPSHOT"
+libraryDependencies += "com.daodecode" %% "scalax-collection" % "0.1.3-SNAPSHOT"
 ```
 ### maven
 ``` xml
 <dependency>
     <groupId>com.daodecode</groupId>
     <artifactId>scalax-collection_2.10</artifactId>
-    <version>0.1.2-SNAPSHOT</version>
+    <version>0.1.3-SNAPSHOT</version>
 </dependency>
 ```
 or
@@ -138,6 +138,6 @@ or
 <dependency>
     <groupId>com.daodecode</groupId>
     <artifactId>scalax-collection_2.11</artifactId>
-    <version>0.1.2-SNAPSHOT</version>
+    <version>0.1.3-SNAPSHOT</version>
 </dependency>
 ```
