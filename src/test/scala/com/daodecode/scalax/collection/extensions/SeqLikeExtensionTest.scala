@@ -4,7 +4,6 @@ import org.scalatest.Matchers
 
 class SeqLikeExtensionTest extends org.scalatest.FlatSpec with Matchers {
 
-
   case class Person(fName: String, lName: String, age: Int)
 
   val eugeneP = Person("Eugene", "Platonov", 27)
@@ -27,10 +26,10 @@ class SeqLikeExtensionTest extends org.scalatest.FlatSpec with Matchers {
 
   it should "evaluate transforming function only once per each element" in {
 
-    def assertEvaluateOnlyOnce(emptySeq: Seq[Person]) {
+    def assertEvaluateOnlyOnce(emptySeq: Seq[Person]): Unit = {
       val people = emptySeq ++ Iterable(eugeneP, xeniya, eugeneM, vasiliy)
       var x = 0
-      people.distinctBy { p => x += 1; p.fName}.toList should be(List(eugeneP, xeniya, vasiliy))
+      people.distinctBy { p => x += 1; p.fName }.toList should be(List(eugeneP, xeniya, vasiliy))
       assert(x == 4, "Looks like function has been evaluated wrong number of times")
     }
 
