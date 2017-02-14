@@ -35,3 +35,9 @@ libraryDependencies += "org.scalatest" %% "scalatest" % "3.0.1" % "test"
 scalacOptions in (Compile, console) := scalacOptions.value.filterNot(_ == "-Ywarn-unused-import")
 
 initialCommands in console := "import com.daodecode.scalax.collection.extensions._"
+
+tutSettings
+
+tutSourceDirectory := file(".") / "docs"
+
+tutTargetDirectory := file(".")

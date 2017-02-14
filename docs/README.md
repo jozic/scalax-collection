@@ -8,81 +8,69 @@ Released for scala 2.10, 2.11 and 2.12
 ## Examples
 
 An import needed for examples to work:
-```scala
-scala> import com.daodecode.scalax.collection.extensions._
+```tut
 import com.daodecode.scalax.collection.extensions._
 ```
 
 ### distinctBy
 
 preserving first duplicate
-```scala
-scala> val xs = List(1 -> "one", 1 -> "ten", 2 -> "two", 2 -> "twenty").distinctBy(_._1)
-xs: List[(Int, String)] = List((1,one), (2,two))
+```tut
+val xs = List(1 -> "one", 1 -> "ten", 2 -> "two", 2 -> "twenty").distinctBy(_._1)
 ```
 
 or preserving any duplicate you want
-```scala
-scala> val xs = List(1 -> "one", 1 -> "ten", 2 -> "two", 2 -> "twenty").distinctBy(_._1, takeFirst = _._2.length > _._2.length)
-xs: List[(Int, String)] = List((1,ten), (2,twenty))
+```tut
+val xs = List(1 -> "one", 1 -> "ten", 2 -> "two", 2 -> "twenty").distinctBy(_._1, takeFirst = _._2.length > _._2.length)
 ```
 
 ### foldLeftWhile/foldRightWhile
 
-```scala
-scala> val xs = Iterable(List(1,2,3), List(4,5), List(6,7,8,9)).foldLeftWhile(List.empty[Int])(_.size < 4){ case (acc, l) => acc ++ l }
-xs: List[Int] = List(1, 2, 3, 4, 5)
+```tut
+val xs = Iterable(List(1,2,3), List(4,5), List(6,7,8,9)).foldLeftWhile(List.empty[Int])(_.size < 4){ case (acc, l) => acc ++ l }
 ```
 
 ### toCompleteMap
 
-```scala
-scala> val cm = List(1 -> "1", 2 -> "2", 1 -> "11").toCompleteMap
-cm: scala.collection.immutable.Map[Int,List[String]] = Map(2 -> List(2), 1 -> List(1, 11))
+```tut
+val cm = List(1 -> "1", 2 -> "2", 1 -> "11").toCompleteMap
 ```
 
 ### toMapBy
 
-```scala
-scala> val cm = List("1", "2", "1").toMapBy(_.toInt)
-cm: scala.collection.immutable.Map[Int,String] = Map(1 -> 1, 2 -> 2)
+```tut
+val cm = List("1", "2", "1").toMapBy(_.toInt)
 ```
 
 ### withFrequency
 
-```scala
-scala> val fm = List("a", "b", "c", "a", "b", "d").withFrequency
-fm: scala.collection.immutable.Map[String,Int] = Map(b -> 2, d -> 1, a -> 2, c -> 1)
+```tut
+val fm = List("a", "b", "c", "a", "b", "d").withFrequency
 ```
 
 ### mergedWith
 
 Merges two maps using provided function to merge values for duplicate keys
-```scala
-scala> val merged = Map("1" -> 1, "2" -> 2).mergedWith(Map("1" -> 1, "2" -> 2))(_ + _)
-merged: scala.collection.immutable.Map[String,Int] = Map(1 -> 2, 2 -> 4)
+```tut
+val merged = Map("1" -> 1, "2" -> 2).mergedWith(Map("1" -> 1, "2" -> 2))(_ + _)
 ```
 
 ### minOption/minOptionBy
 
 Finds the smallest element wrapped in `Option` or `None` if iterable is empty
-```scala
-scala> val m = List.empty[Int].minOption
-m: Option[Int] = None
+```tut
+val m = List.empty[Int].minOption
 
-scala> val m = List(1,2,1).minOptionBy(_ * -1)
-m: Option[Int] = Some(2)
+val m = List(1,2,1).minOptionBy(_ * -1)
 ```
 
 ### maxOption/maxOptionBy
 
 Finds the largest element wrapped in `Option` or `None` if iterable is empty
-```scala
-scala> val m = List.empty[Int].maxOption
-m: Option[Int] = None
+```tut
+val m = List.empty[Int].maxOption
 
-scala> val m = List(1,2,1).maxOptionBy(_ * -1)
-m: Option[Int] = Some(1)
+val m = List(1,2,1).maxOptionBy(_ * -1)
 ```
 
 ##Latest stable release
