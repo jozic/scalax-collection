@@ -2,7 +2,6 @@ package com.daodecode.scalax.collection
 
 import scala.collection._
 import scala.collection.generic.CanBuildFrom
-import scala.collection.mutable.MapBuilder
 
 package object extensions {
 
@@ -127,7 +126,7 @@ package object extensions {
      * }}}
      *
      * @return a map of type `immutable.Map[K, That]` where `That` is a $coll of `V`
-      * @since 0.1.1
+     * @since 0.1.1
      **/
     def toCompleteMap[K, V, That](implicit ev: A <:< (K, V), cbf: CanBuildFrom[Repr, V, That]): immutable.Map[K, That] = {
       val m = mutable.Map.empty[K, mutable.Builder[V, That]]
@@ -138,6 +137,22 @@ package object extensions {
       val b = immutable.Map.newBuilder[K, That]
       for ((k, vBuilder) <- m)
         b += ((k, vBuilder.result()))
+      b.result()
+    }
+
+    /**
+      * Converts this $coll to a map where key is derived from each item using function `f`
+      * @param f Function to build a key for the result Map
+      * @tparam K Key type of the result Map
+      * @return Immutable Map with original elements as values.
+      *         It's possible to loose some of the original elements
+      *         if function `f` returns same key for more than one element
+      * @since 0.1.3
+      */
+    def toMapBy[K](f: A => K): immutable.Map[K, A] = {
+      val b = immutable.Map.newBuilder[K, A]
+      for (a <- iterableLike)
+        b += f(a) -> a
       b.result()
     }
 
