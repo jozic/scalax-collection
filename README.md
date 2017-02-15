@@ -43,6 +43,8 @@ cm: scala.collection.immutable.Map[Int,List[String]] = Map(2 -> List(2), 1 -> Li
 
 ### mapToMap
 
+can be seen as more efficient replacement for `map().toMap` combination
+
 ```scala
 scala> val m = List("1" -> "one", "2" -> "two").mapToMap { case (i, s) => i.toInt -> s }
 m: scala.collection.immutable.Map[Int,String] = Map(1 -> one, 2 -> two)
@@ -58,8 +60,8 @@ m: scala.collection.immutable.Map[Int,String] = Map(1 -> 1, 2 -> 2)
 ### toMapWithValue
 
 ```scala
-scala> val m = List("1", "2", "1").toMapWithKey(_.toInt)
-m: scala.collection.immutable.Map[Int,String] = Map(1 -> 1, 2 -> 2)
+scala> val m = List("1", "2", "1").toMapWithValue(_.toInt)
+m: scala.collection.immutable.Map[String,Int] = Map(1 -> 1, 2 -> 2)
 ```
 
 ### withFrequency

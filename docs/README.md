@@ -38,6 +38,8 @@ val cm = List(1 -> "1", 2 -> "2", 1 -> "11").toCompleteMap
 
 ### mapToMap
 
+can be seen as more efficient replacement for `map().toMap` combination
+
 ```tut
 val m = List("1" -> "one", "2" -> "two").mapToMap { case (i, s) => i.toInt -> s }
 ```
@@ -51,7 +53,7 @@ val m = List("1", "2", "1").toMapWithKey(_.toInt)
 ### toMapWithValue
 
 ```tut
-val m = List("1", "2", "1").toMapWithKey(_.toInt)
+val m = List("1", "2", "1").toMapWithValue(_.toInt)
 ```
 
 ### withFrequency
