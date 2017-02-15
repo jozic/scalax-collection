@@ -134,9 +134,25 @@ package object extensions {
         val builder = m.getOrElseUpdate(keyValue._1, cbf(iterableLike.repr))
         builder += keyValue._2
       }
-      val b = immutable.Map.newBuilder[K, That]
-      for ((k, vBuilder) <- m)
-        b += ((k, vBuilder.result()))
+      m.mapToMap { case (k, b) => k -> b.result() }
+    }
+
+    /**
+      * Converts this $coll to an immutable map using provided function `f`
+      * to generate Map keys and values from elements of this $coll.
+      * It can be seen as more efficient combination of `map() and toMap`
+      *
+      * @param f Function to generate key and value from element of this $coll
+      * @tparam K Key type of the result Map
+      * @tparam V Value type of the result Map
+      * @return Immutable Map. It's possible to loose some of the original elements
+      *         if function `f` returns same key for more than one element
+      * @since 0.1.3
+      */
+    def mapToMap[K, V](f: A => (K, V)): immutable.Map[K, V] = {
+      val b = immutable.Map.newBuilder[K, V]
+      for (a <- iterableLike)
+        b += f(a)
       b.result()
     }
 
@@ -149,12 +165,17 @@ package object extensions {
       *         if function `f` returns same key for more than one element
       * @since 0.1.3
       */
-    def toMapBy[K](f: A => K): immutable.Map[K, A] = {
-      val b = immutable.Map.newBuilder[K, A]
-      for (a <- iterableLike)
-        b += f(a) -> a
-      b.result()
-    }
+    def toMapWithKey[K](f: A => K): immutable.Map[K, A] = mapToMap(a => f(a) -> a)
+
+    /**
+      * Converts this $coll to a map where value is derived from each item using function `f`
+      * @param f Function to build a value for the result Map
+      * @tparam V Value type of the result Map
+      * @return Immutable Map with original elements as keys.
+      *         It's possible to loose some of the original elements, as Maps don't allow duplicate keys
+      * @since 0.1.3
+      */
+    def toMapWithValue[V](f: A => V): immutable.Map[A, V] = mapToMap(a => a -> f(a))
 
     /**
      * Creates a new immutable `Map` with unique elements of this $coll as keys and

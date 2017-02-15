@@ -36,10 +36,22 @@ val xs = Iterable(List(1,2,3), List(4,5), List(6,7,8,9)).foldLeftWhile(List.empt
 val cm = List(1 -> "1", 2 -> "2", 1 -> "11").toCompleteMap
 ```
 
-### toMapBy
+### mapToMap
 
 ```tut
-val cm = List("1", "2", "1").toMapBy(_.toInt)
+val m = List("1" -> "one", "2" -> "two").mapToMap { case (i, s) => i.toInt -> s }
+```
+
+### toMapWithKey
+
+```tut
+val m = List("1", "2", "1").toMapWithKey(_.toInt)
+```
+
+### toMapWithValue
+
+```tut
+val m = List("1", "2", "1").toMapWithKey(_.toInt)
 ```
 
 ### withFrequency

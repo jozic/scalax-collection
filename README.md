@@ -41,11 +41,25 @@ scala> val cm = List(1 -> "1", 2 -> "2", 1 -> "11").toCompleteMap
 cm: scala.collection.immutable.Map[Int,List[String]] = Map(2 -> List(2), 1 -> List(1, 11))
 ```
 
-### toMapBy
+### mapToMap
 
 ```scala
-scala> val cm = List("1", "2", "1").toMapBy(_.toInt)
-cm: scala.collection.immutable.Map[Int,String] = Map(1 -> 1, 2 -> 2)
+scala> val m = List("1" -> "one", "2" -> "two").mapToMap { case (i, s) => i.toInt -> s }
+m: scala.collection.immutable.Map[Int,String] = Map(1 -> one, 2 -> two)
+```
+
+### toMapWithKey
+
+```scala
+scala> val m = List("1", "2", "1").toMapWithKey(_.toInt)
+m: scala.collection.immutable.Map[Int,String] = Map(1 -> 1, 2 -> 2)
+```
+
+### toMapWithValue
+
+```scala
+scala> val m = List("1", "2", "1").toMapWithKey(_.toInt)
+m: scala.collection.immutable.Map[Int,String] = Map(1 -> 1, 2 -> 2)
 ```
 
 ### withFrequency

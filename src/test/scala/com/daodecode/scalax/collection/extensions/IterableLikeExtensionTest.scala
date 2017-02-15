@@ -51,12 +51,32 @@ class IterableLikeExtensionTest extends FlatSpec with Matchers {
     List.empty[(String, String)].toCompleteMap should be(Map[String, List[String]]())
   }
 
-  "toMapBy" should "create a map" in {
-    List("1", "2", "1").toMapBy(_.toInt) should be(Map(1 -> "1", 2 -> "2"))
+  "mapToMap" should "create a map" in {
+    List("1", "2", "1").mapToMap(si => si.toInt -> si) should be(Map(1 -> "1", 2 -> "2"))
+    List("1" -> "one", "2" -> "two")
+      .mapToMap { case (i, s) => i.toInt -> s } should be(Map(1 -> "one", 2 -> "two"))
   }
 
   it should "return empty map if source is empty" in {
-    List.empty[String].toMapBy(_.toInt) should be(Map[Int, String]())
+    List.empty[String].mapToMap(si => si.toInt -> si) should be(Map[Int, String]())
+    List.empty[(String, String)]
+      .mapToMap { case (i, s) => i.toInt -> s } should be(Map[Int, String]())
+  }
+
+  "toMapWithKey" should "create a map" in {
+    List("1", "2", "1").toMapWithKey(_.toInt) should be(Map(1 -> "1", 2 -> "2"))
+  }
+
+  it should "return empty map if source is empty" in {
+    List.empty[String].toMapWithKey(_.toInt) should be(Map[Int, String]())
+  }
+
+  "toMapWithValue" should "create a map" in {
+    List("1", "2", "1").toMapWithValue(_.toInt) should be(Map("1" -> 1, "2" -> 2))
+  }
+
+  it should "return empty map if source is empty" in {
+    List.empty[String].toMapWithValue(_.toInt) should be(Map[String, Int]())
   }
 
   "withFrequency" should "calculate frequency of each element in the source" in {
