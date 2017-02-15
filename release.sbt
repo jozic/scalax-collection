@@ -1,5 +1,4 @@
 import sbtrelease.ReleaseStateTransformations._
-import sbtrelease._
 
 releaseCrossBuild := true
 
@@ -10,6 +9,7 @@ releaseProcess := Seq[ReleaseStep](
   inquireVersions,
   runClean,
   runTest,
+  ReleaseStep(action = Command.process("tut", _)),
   setReleaseVersion,
   commitReleaseVersion,
   tagRelease,
