@@ -263,7 +263,7 @@ package object extensions {
       *         wrapped in `Option` or `None` if $coll is empty
       * @since 0.1.2
       */
-    def maxOptionBy[B >: A](f: A => B)(implicit ord: Ordering[B]): Option[A] =
+    def maxOptionBy[B](f: A => B)(implicit ord: Ordering[B]): Option[A] =
       if (iterableLike.isEmpty) None
       else Some(iterableLike.maxBy(f))
 
@@ -287,7 +287,7 @@ package object extensions {
       *         wrapped in `Option` or `None` if $coll is empty
       * @since 0.1.2
       */
-    def minOptionBy[B >: A](f: A => B)(implicit ord: Ordering[B]): Option[A] =
+    def minOptionBy[B](f: A => B)(implicit ord: Ordering[B]): Option[A] =
       if (iterableLike.isEmpty) None
       else Some(iterableLike.minBy(f))
 
