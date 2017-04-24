@@ -16,8 +16,8 @@ package object extensions {
       *
       * Example:
       * {{{
-      *   scala> val xs = List(1 -> "one", 1 -> "ten", 2 -> "two", 2 -> "twenty").distinctBy(_._1)
-      *   xs: List[(Int, String)] = List((1,one), (2,two))
+      *   scala> List(1 -> "one", 1 -> "ten", 2 -> "two", 2 -> "twenty").distinctBy(_._1)
+      *   res1: List[(Int, String)] = List((1,one), (2,two))
       * }}}
       *
       * @return  A new $coll which contains the first occurrence of every element of this $coll.
@@ -33,9 +33,9 @@ package object extensions {
       *
       * Example:
       * {{{
-      *   scala> val xs = List(1 -> "one", 1 -> "ten", 2 -> "two", 2 -> "twenty").
-      *   | distinctBy(_._1, takeFirst = _._2.length > _._2.length)
-      *   xs: List[(Int, String)] = List((1,ten), (2,twenty))
+      *   scala> List(1 -> "one", 1 -> "ten", 2 -> "two", 2 -> "twenty").
+      *        | distinctBy(_._1, takeFirst = _._2.length > _._2.length)
+      *   res1: List[(Int, String)] = List((1,ten), (2,twenty))
       * }}}
       *
       * @return  A new $coll which contains selected occurrence of every element of this $coll.
@@ -64,9 +64,9 @@ package object extensions {
       *
       * Example:
       * {{{
-      *   scala> val xs = Iterable(List(1,2,3), List(4,5), List(6,7,8,9)).
-      *   | foldLeftWhile(List.empty[Int])(_.size < 4){ case (acc, l) => acc ++ l }
-      *   xs: List[Int] = List(1, 2, 3, 4, 5)
+      *   scala> Iterable(List(1,2,3), List(4,5), List(6,7,8,9)).
+      *        | foldLeftWhile(List.empty[Int])(_.size < 4){ case (acc, l) => acc ++ l }
+      *   res1: List[Int] = List(1, 2, 3, 4, 5)
       * }}}
       *
       * @param   z    the start value.
@@ -92,9 +92,9 @@ package object extensions {
       *
       * Example:
       * {{{
-      *   scala> val xs = Iterable(List(1,2,3), List(4,5), List(6,7,8,9)).
-      *   | foldRightWhile(List.empty[Int])(_.size < 5){ case (l, acc) =>  l ::: acc }
-      *   xs: List[Int] = List(4, 5, 6, 7, 8, 9)
+      *   scala> Iterable(List(1,2,3), List(4,5), List(6,7,8,9)).
+      *        | foldRightWhile(List.empty[Int])(_.size < 5){ case (l, acc) =>  l ::: acc }
+      *   res1: List[Int] = List(4, 5, 6, 7, 8, 9)
       * }}}
       *
       * @param   z    the start value.
@@ -121,8 +121,8 @@ package object extensions {
      *
      * Example:
      * {{{
-     *   scala> val cm = List(1 -> "1", 2 -> "2", 1 -> "11").toCompleteMap
-     *   cm: scala.collection.immutable.Map[Int,List[String]] = Map(2 -> List(2), 1 -> List(1, 11))
+     *   scala> List(1 -> "1", 2 -> "2", 1 -> "11").toCompleteMap
+     *   res1: scala.collection.immutable.Map[Int,List[String]] = Map(2 -> List(2), 1 -> List(1, 11))
      * }}}
      *
      * @return a map of type `immutable.Map[K, That]` where `That` is a $coll of `V`
@@ -183,8 +183,8 @@ package object extensions {
      *
      * Example:
      * {{{
-     *   scala> val fm = List("a", "b", "c", "a", "b", "d").withFrequency
-     *   fm: scala.collection.immutable.Map[String,Int] = Map(b -> 2, d -> 1, a -> 2, c -> 1)
+     *   scala> List("a", "b", "c", "a", "b", "d").withFrequency
+     *   res1: scala.collection.immutable.Map[String,Int] = Map(b -> 2, d -> 1, a -> 2, c -> 1)
      * }}}
      *
      * @return a map of type immutable.Map[A, Int] where Int represents a frequency of key A in original $coll
@@ -204,11 +204,11 @@ package object extensions {
       *
       * Example:
       * {{{
-      *   scala> val m = List(1,2,1).maxOption
-      *   m: Option[Int] = Some(2)
+      *   scala> List(1,2,1).maxOption
+      *   res1: Option[Int] = Some(2)
       *
-      *   scala> val m = List.empty[Int].maxOption
-      *   m: Option[Int] = None
+      *   scala> List.empty[Int].maxOption
+      *   res2: Option[Int] = None
       * }}}
       *
       * @param ord An ordering to be used for comparing elements.
@@ -227,11 +227,11 @@ package object extensions {
       *
       * Example:
       * {{{
-      *   scala> val m = List(1,2,1).minOption
-      *   m: Option[Int] = Some(1)
+      *   scala> List(1,2,1).minOption
+      *   res1: Option[Int] = Some(1)
       *
-      *   scala> val m = List.empty[Int].minOption
-      *   m: Option[Int] = None
+      *   scala> List.empty[Int].minOption
+      *   res2: Option[Int] = None
       * }}}
       *
       * @param ord An ordering to be used for comparing elements.
@@ -249,11 +249,11 @@ package object extensions {
       *
       * Example:
       * {{{
-      *   scala> val m = List(1,2,1).maxOptionBy(_ * -1)
-      *   m: Option[Int] = Some(1)
+      *   scala> List(1,2,1).maxOptionBy(_ * -1)
+      *   res1: Option[Int] = Some(1)
       *
-      *   scala> val m = List.empty[Int].maxOptionBy(_ * -1)
-      *   m: Option[Int] = None
+      *   scala> List.empty[Int].maxOptionBy(_ * -1)
+      *   res2: Option[Int] = None
       * }}}
       *
       * @param f Transforming function that applied to elements produces results to be compared.
@@ -273,11 +273,11 @@ package object extensions {
       *
       * Example:
       * {{{
-      *   scala> val m = List(1,2,1).minOptionBy(_ * -1)
-      *   m: Option[Int] = Some(2)
+      *   scala> List(1,2,1).minOptionBy(_ * -1)
+      *   res1: Option[Int] = Some(2)
       *
-      *   scala> val m = List.empty[Int].minOptionBy(_ * -1)
-      *   m: Option[Int] = None
+      *   scala> List.empty[Int].minOptionBy(_ * -1)
+      *   res2: Option[Int] = None
       * }}}
       *
       * @param f Transforming function that applied to elements produces results to be compared.
@@ -306,8 +306,8 @@ package object extensions {
      *
      * Example:
      * {{{
-     *   scala> val merged = Map("1" -> 1, "2" -> 2).mergedWith(Map("1" -> 1, "2" -> 2))(_ + _)
-     *   merged: scala.collection.immutable.Map[String,Int] = Map(1 -> 2, 2 -> 4)
+     *   scala> Map("1" -> 1, "2" -> 2).mergedWith(Map("1" -> 1, "2" -> 2))(_ + _)
+     *   res1: scala.collection.immutable.Map[String,Int] = Map(1 -> 2, 2 -> 4)
      * }}}
      *
      * @since 0.1.2
