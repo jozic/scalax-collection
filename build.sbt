@@ -2,9 +2,9 @@ name := "scalax-collection"
 
 organization := "com.daodecode"
 
-scalaVersion := "2.12.1"
+scalaVersion := "2.12.2"
 
-crossScalaVersions := Seq("2.10.6", "2.11.8", scalaVersion.value)
+crossScalaVersions := Seq("2.10.6", "2.11.11", scalaVersion.value)
 
 def scalacOptionsVersion(scalaBinVersion: String) = {
   Seq(
@@ -30,7 +30,7 @@ def scalacOptionsVersion(scalaBinVersion: String) = {
 
 scalacOptions := scalacOptionsVersion(scalaBinaryVersion.value)
 
-libraryDependencies += "org.scalatest" %% "scalatest" % "3.0.1" % "test"
+libraryDependencies += "org.scalatest" %% "scalatest" % "3.0.3" % "test"
 
 scalacOptions in (Compile, console) := scalacOptions.value.filterNot(_ == "-Ywarn-unused-import")
 
