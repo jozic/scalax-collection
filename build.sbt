@@ -41,6 +41,10 @@ initialCommands in console := "import com.daodecode.scalax.collection.extensions
 
 tutSettings
 
+// from 2.12.2 -Xlint  includes -Ywarn-unused, which includes -Ywarn-unused:import
+tutScalacOptions := tutScalacOptions.value
+  .filterNot(Set("-Ywarn-unused", "-Xlint")) ++ Seq("-Xlint:-unused", "-Ywarn-unused:-import, _")
+
 tutSourceDirectory := file(".") / "docs"
 
 tutTargetDirectory := file(".")
