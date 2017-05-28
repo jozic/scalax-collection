@@ -71,6 +71,13 @@ scala> val fm = List("a", "b", "c", "a", "b", "d").withFrequency
 fm: scala.collection.immutable.Map[String,Int] = Map(b -> 2, d -> 1, a -> 2, c -> 1)
 ```
 
+### withFrequencyBy
+
+```scala
+scala> val fm = List("ab", "bc", "cd", "ab", "bc", "de").withFrequencyBy(_.head)
+fm: scala.collection.immutable.Map[Char,Int] = Map(b -> 2, d -> 1, a -> 2, c -> 1)
+```
+
 ### mergedWith
 
 Merges two maps using provided function to merge values for duplicate keys

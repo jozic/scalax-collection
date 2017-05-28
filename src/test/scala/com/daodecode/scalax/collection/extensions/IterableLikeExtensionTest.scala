@@ -87,6 +87,15 @@ class IterableLikeExtensionTest extends FlatSpec with Matchers {
     List.empty[String].withFrequency should be(Map[String, Int]())
   }
 
+  "withFrequencyBy" should "calculate frequency of each element in the source after applying function f" in {
+    Iterable("ab", "bc", "cd", "ae", "bk", "dd").withFrequencyBy(_.head) should be(
+      Map('a' -> 2, 'b' -> 2, 'c' -> 1, 'd' -> 1))
+  }
+
+  it should "return empty map if source is empty" in {
+    List.empty[String].withFrequencyBy(_.head) should be(Map[String, Int]())
+  }
+
   "minOption" should "return None if iterable is empty" in {
     Iterable.empty[Int].minOption should be(None)
   }

@@ -62,6 +62,12 @@ val m = List("1", "2", "1").toMapWithValue(_.toInt)
 val fm = List("a", "b", "c", "a", "b", "d").withFrequency
 ```
 
+### withFrequencyBy
+
+```tut
+val fm = List("ab", "bc", "cd", "ab", "bc", "de").withFrequencyBy(_.head)
+```
+
 ### mergedWith
 
 Merges two maps using provided function to merge values for duplicate keys

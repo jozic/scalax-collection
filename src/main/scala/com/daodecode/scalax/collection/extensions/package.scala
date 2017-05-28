@@ -190,9 +190,27 @@ package object extensions {
      * @return a map of type immutable.Map[A, Int] where Int represents a frequency of key A in original $coll
       * @since 0.1.1
      */
-    def withFrequency: immutable.Map[A, Int] = {
-      val m = mutable.Map.empty[A, Int]
-      for (key <- iterableLike) {
+    def withFrequency: immutable.Map[A, Int] = withFrequencyBy(identity)
+
+    /**
+     * Creates a new immutable `Map` with unique elements resulting from applying function `f`
+     * to elements of this $coll as keys and
+     * count of duplicates ((as determined by `==`) (frequency) as values.
+     *
+     * Example:
+     * {{{
+     *   scala> List("ab", "bc", "cd", "ab", "bc", "de").withFrequencyBy(_.head)
+     *   res1: scala.collection.immutable.Map[Char  ,Int] = Map(b -> 2, d -> 1, a -> 2, c -> 1)
+     * }}}
+     *
+     * @return a map of type immutable.Map[B, Int] where Int represents a frequency of keys,
+      *         obtained from original $coll by applying function `f` to elements
+      * @since 0.1.3
+     */
+    def withFrequencyBy[B](f: A => B): immutable.Map[B, Int] = {
+      val m = mutable.Map.empty[B, Int]
+      for (a <- iterableLike) {
+        val key = f(a)
         val currentFreq = m.getOrElse(key, 0)
         m.update(key, currentFreq + 1)
       }
