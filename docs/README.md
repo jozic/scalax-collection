@@ -1,9 +1,13 @@
 scalax-collection [![Build Status](https://travis-ci.org/jozic/scalax-collection.svg?branch=master)](https://travis-ci.org/jozic/scalax-collection) [![Coverage Status](https://coveralls.io/repos/jozic/scalax-collection/badge.svg)](https://coveralls.io/r/jozic/scalax-collection)
 =================
 
-A small library of extension methods for standard scala collections library
+A small library of extension methods for standard scala collections library. 
+Released for scala 2.11 and 2.12 (latest version for 2.10 is 0.1.2) and published to maven central.
 
-Released for scala 2.10, 2.11 and 2.12
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.daodecode/scalax-collection_2.10/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.daodecode/scalax-collection_2.10)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.daodecode/scalax-collection_2.11/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.daodecode/scalax-collection_2.11)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.daodecode/scalax-collection_2.12/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.daodecode/scalax-collection_2.12)
+
 
 ## Examples
 
@@ -93,33 +97,33 @@ val m = List.empty[Int].maxOption
 val m = List(1,2,1).maxOptionBy(_ * -1)
 ```
 
-##Latest stable release
+## Latest stable release
 
 ### sbt
 ```
 libraryDependencies += "com.daodecode" %% "scalax-collection" % "0.1.2"
 ```
 ### maven
-#### scala 2.10 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.daodecode/scalax-collection_2.10/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.daodecode/scalax-collection_2.10)
+
+set `<scala.binary.version>` property to scala version you need, like
+
+```xml
+<properties>
+    <scala.binary.version>2.12</scala.binary.version>
+</properties>
+
+```
+ and then in `dependencies` add
+ 
 ``` xml
 <dependency>
     <groupId>com.daodecode</groupId>
-    <artifactId>scalax-collection_2.10</artifactId>
-    <version>0.1.2</version>
-</dependency>
-```
-or
-#### scala 2.11 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.daodecode/scalax-collection_2.11/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.daodecode/scalax-collection_2.11)
-
-``` xml
-<dependency>
-    <groupId>com.daodecode</groupId>
-    <artifactId>scalax-collection_2.11</artifactId>
+    <artifactId>scalax-collection_${scala.binary.version}</artifactId>
     <version>0.1.2</version>
 </dependency>
 ```
 
-##Latest snapshot
+## Latest snapshot
 
 First add sonatype snapshots repository to your settings
 
@@ -145,18 +149,17 @@ then add snapshot as a dependency
 libraryDependencies += "com.daodecode" %% "scalax-collection" % "0.1.3-SNAPSHOT"
 ```
 ### maven
-``` xml
-<dependency>
-    <groupId>com.daodecode</groupId>
-    <artifactId>scalax-collection_2.10</artifactId>
-    <version>0.1.3-SNAPSHOT</version>
-</dependency>
+```xml
+<properties>
+    <scala.binary.version>2.12</scala.binary.version>
+</properties>
+
 ```
-or
+ 
 ``` xml
 <dependency>
     <groupId>com.daodecode</groupId>
-    <artifactId>scalax-collection_2.11</artifactId>
+    <artifactId>scalax-collection_${scala.binary.version}</artifactId>
     <version>0.1.3-SNAPSHOT</version>
 </dependency>
 ```

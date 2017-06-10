@@ -147,7 +147,7 @@ package object extensions {
       * @tparam V Value type of the result Map
       * @return Immutable Map. It's possible to loose some of the original elements
       *         if function `f` returns same key for more than one element
-      * @since 0.1.3
+      * @since 0.2.0
       */
     def mapToMap[K, V](f: A => (K, V)): immutable.Map[K, V] = {
       val b = immutable.Map.newBuilder[K, V]
@@ -163,7 +163,7 @@ package object extensions {
       * @return Immutable Map with original elements as values.
       *         It's possible to loose some of the original elements
       *         if function `f` returns same key for more than one element
-      * @since 0.1.3
+      * @since 0.2.0
       */
     def toMapWithKey[K](f: A => K): immutable.Map[K, A] = mapToMap(a => f(a) -> a)
 
@@ -173,7 +173,7 @@ package object extensions {
       * @tparam V Value type of the result Map
       * @return Immutable Map with original elements as keys.
       *         It's possible to loose some of the original elements, as Maps don't allow duplicate keys
-      * @since 0.1.3
+      * @since 0.2.0
       */
     def toMapWithValue[V](f: A => V): immutable.Map[A, V] = mapToMap(a => a -> f(a))
 
@@ -205,7 +205,7 @@ package object extensions {
      *
      * @return a map of type immutable.Map[B, Int] where Int represents a frequency of keys,
       *         obtained from original $coll by applying function `f` to elements
-      * @since 0.1.3
+      * @since 0.2.0
      */
     def withFrequencyBy[B](f: A => B): immutable.Map[B, Int] = {
       val m = mutable.Map.empty[B, Int]
