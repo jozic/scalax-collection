@@ -2,11 +2,11 @@ scalax-collection [![Build Status](https://travis-ci.org/jozic/scalax-collection
 =================
 
 A small library of extension methods for standard scala collections library. 
-Released for scala 2.11 and 2.12 (latest version for 2.10 is 0.1.2) and published to maven central.
+Published to maven central.
 
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.daodecode/scalax-collection_2.10/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.daodecode/scalax-collection_2.10)
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.daodecode/scalax-collection_2.11/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.daodecode/scalax-collection_2.11)
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.daodecode/scalax-collection_2.12/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.daodecode/scalax-collection_2.12)
+| 2.10 | 2.11 | 2.12 |
+|------|------|------|
+|[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.daodecode/scalax-collection_2.10/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.daodecode/scalax-collection_2.10) | [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.daodecode/scalax-collection_2.11/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.daodecode/scalax-collection_2.11) | [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.daodecode/scalax-collection_2.12/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.daodecode/scalax-collection_2.12) |
 
 
 ## Examples
@@ -116,7 +116,7 @@ m: Option[Int] = Some(1)
 
 ### sbt
 ```
-libraryDependencies += "com.daodecode" %% "scalax-collection" % "0.1.2"
+libraryDependencies += "com.daodecode" %% "scalax-collection" % "0.2.0"
 ```
 ### maven
 
@@ -134,7 +134,7 @@ set `<scala.binary.version>` property to scala version you need, like
 <dependency>
     <groupId>com.daodecode</groupId>
     <artifactId>scalax-collection_${scala.binary.version}</artifactId>
-    <version>0.1.2</version>
+    <version>0.2.0</version>
 </dependency>
 ```
 
@@ -161,7 +161,7 @@ then add snapshot as a dependency
 
 ### sbt
 ```
-libraryDependencies += "com.daodecode" %% "scalax-collection" % "0.1.3-SNAPSHOT"
+libraryDependencies += "com.daodecode" %% "scalax-collection" % "0.2.1-SNAPSHOT"
 ```
 ### maven
 ```xml
@@ -175,6 +175,6 @@ libraryDependencies += "com.daodecode" %% "scalax-collection" % "0.1.3-SNAPSHOT"
 <dependency>
     <groupId>com.daodecode</groupId>
     <artifactId>scalax-collection_${scala.binary.version}</artifactId>
-    <version>0.1.3-SNAPSHOT</version>
+    <version>0.2.1-SNAPSHOT</version>
 </dependency>
 ```
