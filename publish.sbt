@@ -14,3 +14,10 @@ sonatypeSettings ++ Seq(
 
   licenses := Seq("BSD-style" -> url("http://www.opensource.org/licenses/BSD-3-Clause"))
 )
+
+publishTo := Some(
+  if (isSnapshot.value)
+    Opts.resolver.sonatypeSnapshots
+  else
+    Opts.resolver.sonatypeStaging
+)
