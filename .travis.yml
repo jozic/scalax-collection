@@ -2,9 +2,9 @@ language: scala
 scala:
   - "2.10.6"
   - "2.11.11"
-  - "2.12.2"
+  - "2.12.3"
 jdk:
   - oraclejdk8
 
-script: "sbt clean coverage test tut coverageReport"
+script: "sbt scoverage tut"
 after_success: "sbt coveralls"

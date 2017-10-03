@@ -115,7 +115,7 @@ m: Option[Int] = Some(1)
 ## Latest stable release
 
 ### sbt
-```
+```scala
 libraryDependencies += "com.daodecode" %% "scalax-collection" % "0.2.0"
 ```
 ### maven
@@ -130,7 +130,7 @@ set `<scala.binary.version>` property to scala version you need, like
 ```
  and then in `dependencies` add
  
-``` xml
+```xml
 <dependency>
     <groupId>com.daodecode</groupId>
     <artifactId>scalax-collection_${scala.binary.version}</artifactId>
@@ -144,11 +144,13 @@ First add sonatype snapshots repository to your settings
 
 ### sbt
 
-`resolvers += Resolver.sonatypeRepo("snapshots")`
+```scala
+resolvers += Resolver.sonatypeRepo("snapshots")
+```
 
 ### maven
 
-``` xml
+```xml
 <repository>
     <id>snapshots-repo</id>
     <url>https://oss.sonatype.org/content/repositories/snapshots</url>
@@ -160,7 +162,7 @@ First add sonatype snapshots repository to your settings
 then add snapshot as a dependency
 
 ### sbt
-```
+```scala
 libraryDependencies += "com.daodecode" %% "scalax-collection" % "0.2.1-SNAPSHOT"
 ```
 ### maven
@@ -168,10 +170,9 @@ libraryDependencies += "com.daodecode" %% "scalax-collection" % "0.2.1-SNAPSHOT"
 <properties>
     <scala.binary.version>2.12</scala.binary.version>
 </properties>
-
 ```
  
-``` xml
+```xml
 <dependency>
     <groupId>com.daodecode</groupId>
     <artifactId>scalax-collection_${scala.binary.version}</artifactId>

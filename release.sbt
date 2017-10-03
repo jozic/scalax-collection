@@ -2,20 +2,18 @@ import sbtrelease.ReleaseStateTransformations._
 
 releaseCrossBuild := true
 
-releasePublishArtifactsAction := PgpKeys.publishSigned.value
-
 releaseProcess := Seq[ReleaseStep](
   checkSnapshotDependencies,
   inquireVersions,
   runClean,
   runTest,
-  ReleaseStep(action = Command.process("tut", _)),
+  releaseStepCommand("tut"),
   setReleaseVersion,
   commitReleaseVersion,
   tagRelease,
-  publishArtifacts,
+  releaseStepCommand("publishSigned"),
   setNextVersion,
   commitNextVersion,
-  ReleaseStep(action = Command.process("sonatypeReleaseAll", _)),
+  releaseStepCommand("sonatypeReleaseAll"),
   pushChanges
 )
