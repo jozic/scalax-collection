@@ -229,13 +229,12 @@ package object extensions {
       *   res2: Option[Int] = None
       * }}}
       *
-      * @param ord An ordering to be used for comparing elements.
       * @tparam B The type over which the ordering is defined.
       * @return the largest element wrapped in `Option` or `None` if $coll is empty
       * @since 0.1.2
       *
       */
-    def maxOption[B >: A](implicit ord: Ordering[B]): Option[A] =
+    def maxOption[B >: A : Ordering]: Option[A] =
       if (iterableLike.isEmpty) None
       else Some(iterableLike.max[B])
 
@@ -252,12 +251,11 @@ package object extensions {
       *   res2: Option[Int] = None
       * }}}
       *
-      * @param ord An ordering to be used for comparing elements.
       * @tparam B The type over which the ordering is defined.
       * @return the smallest element wrapped in `Option` or `None` if $coll is empty
       * @since 0.1.2
       */
-    def minOption[B >: A](implicit ord: Ordering[B]): Option[A] =
+    def minOption[B >: A : Ordering]: Option[A] =
       if (iterableLike.isEmpty) None
       else Some(iterableLike.min[B])
 
@@ -275,13 +273,12 @@ package object extensions {
       * }}}
       *
       * @param f Transforming function that applied to elements produces results to be compared.
-      * @param ord An ordering to be used for comparing elements.
       * @tparam B The type over which the ordering is defined.
       * @return the largest element (as identified by `ord` after applying `f`)
       *         wrapped in `Option` or `None` if $coll is empty
       * @since 0.1.2
       */
-    def maxOptionBy[B](f: A => B)(implicit ord: Ordering[B]): Option[A] =
+    def maxOptionBy[B: Ordering](f: A => B): Option[A] =
       if (iterableLike.isEmpty) None
       else Some(iterableLike.maxBy(f))
 
@@ -299,13 +296,12 @@ package object extensions {
       * }}}
       *
       * @param f Transforming function that applied to elements produces results to be compared.
-      * @param ord An ordering to be used for comparing elements.
       * @tparam B The type over which the ordering is defined.
       * @return the smallest element (as identified by `ord` after applying `f`)
       *         wrapped in `Option` or `None` if $coll is empty
       * @since 0.1.2
       */
-    def minOptionBy[B](f: A => B)(implicit ord: Ordering[B]): Option[A] =
+    def minOptionBy[B: Ordering](f: A => B): Option[A] =
       if (iterableLike.isEmpty) None
       else Some(iterableLike.minBy(f))
 
