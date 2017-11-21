@@ -26,7 +26,7 @@ scalacOptions := Seq(
 libraryDependencies +=
   "org.scalatest" %% "scalatest" % "3.0.4" % "test"
 
-scalacOptions in(Compile, console) := scalacOptions.value
+scalacOptions in Test := scalacOptions.value
   .filterNot(Set("-Ywarn-unused", "-Ywarn-unused-import", "-Xlint")) ++
   Seq("-Xlint:-unused", "-Ywarn-unused:-imports,_")
 
