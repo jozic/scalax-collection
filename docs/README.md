@@ -9,7 +9,7 @@ Published to maven central.
 |[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.daodecode/scalax-collection_2.10/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.daodecode/scalax-collection_2.10) | [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.daodecode/scalax-collection_2.11/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.daodecode/scalax-collection_2.11) | [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.daodecode/scalax-collection_2.12/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.daodecode/scalax-collection_2.12) |
 
 
-## Examples
+## Collection Examples
 
 An import needed for examples to work:
 ```tut
@@ -95,6 +95,93 @@ Finds the largest element wrapped in `Option` or `None` if iterable is empty
 val m = List.empty[Int].maxOption
 
 val m = List(1,2,1).maxOptionBy(_ * -1)
+```
+
+## Strings Examples
+
+An import needed for examples to work:
+```tut
+import com.daodecode.scalax._
+```
+### NonEmptyString
+
+```tut
+NonEmptyString(null)
+NonEmptyString("")
+NonEmptyString(" a ")
+
+(null: String) match {
+  case NonEmptyString(_) => "boo" 
+  case _ => "works!"
+}
+
+"" match {
+  case NonEmptyString(_) => "boo" 
+  case _ => "works!"
+}
+
+"works!" match {
+  case NonEmptyString(s) => s 
+  case _ => "boo"
+}
+```
+
+### NonBlankString
+
+```tut
+NonBlankString(null)
+NonBlankString("")
+NonBlankString(" \n \r \t ")
+NonBlankString(" a ")
+
+(null: String) match {
+  case NonBlankString(_) => "boo" 
+  case _ => "works!"
+}
+
+"" match {
+  case NonBlankString(_) => "boo" 
+  case _ => "works!"
+}
+
+"   \t " match {
+  case NonBlankString(_) => "boo" 
+  case _ => "works!"
+}
+
+"works!" match {
+  case NonBlankString(s) => s 
+  case _ => "boo"
+}
+```
+
+### NonBlankTrimmedString
+
+```tut
+NonBlankTrimmedString(null)
+NonBlankTrimmedString("")
+NonBlankTrimmedString(" \n \r \t ")
+NonBlankTrimmedString(" a ")
+
+(null: String) match {
+  case NonBlankTrimmedString(_) => "boo" 
+  case _ => "works!"
+}
+
+"" match {
+  case NonBlankTrimmedString(_) => "boo" 
+  case _ => "works!"
+}
+
+"   \t " match {
+  case NonBlankTrimmedString(_) => "boo" 
+  case _ => "works!"
+}
+
+"  works!\n  " match {
+  case NonBlankTrimmedString(s) => s 
+  case _ => "boo"
+}
 ```
 
 ## Latest stable release

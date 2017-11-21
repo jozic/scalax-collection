@@ -9,7 +9,7 @@ Published to maven central.
 |[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.daodecode/scalax-collection_2.10/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.daodecode/scalax-collection_2.10) | [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.daodecode/scalax-collection_2.11/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.daodecode/scalax-collection_2.11) | [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.daodecode/scalax-collection_2.12/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.daodecode/scalax-collection_2.12) |
 
 
-## Examples
+## Collection Examples
 
 An import needed for examples to work:
 ```scala
@@ -110,6 +110,124 @@ m: Option[Int] = None
 
 scala> val m = List(1,2,1).maxOptionBy(_ * -1)
 m: Option[Int] = Some(1)
+```
+
+## Strings Examples
+
+An import needed for examples to work:
+```scala
+scala> import com.daodecode.scalax._
+import com.daodecode.scalax._
+```
+### NonEmptyString
+
+```scala
+scala> NonEmptyString(null)
+res0: Option[String] = None
+
+scala> NonEmptyString("")
+res1: Option[String] = None
+
+scala> NonEmptyString(" a ")
+res2: Option[String] = Some( a )
+
+scala> (null: String) match {
+     |   case NonEmptyString(_) => "boo" 
+     |   case _ => "works!"
+     | }
+res3: String = works!
+
+scala> "" match {
+     |   case NonEmptyString(_) => "boo" 
+     |   case _ => "works!"
+     | }
+res4: String = works!
+
+scala> "works!" match {
+     |   case NonEmptyString(s) => s 
+     |   case _ => "boo"
+     | }
+res5: String = works!
+```
+
+### NonBlankString
+
+```scala
+scala> NonBlankString(null)
+res6: Option[String] = None
+
+scala> NonBlankString("")
+res7: Option[String] = None
+
+scala> NonBlankString(" \n \r \t ")
+res8: Option[String] = None
+
+scala> NonBlankString(" a ")
+res9: Option[String] = Some( a )
+
+scala> (null: String) match {
+     |   case NonBlankString(_) => "boo" 
+     |   case _ => "works!"
+     | }
+res10: String = works!
+
+scala> "" match {
+     |   case NonBlankString(_) => "boo" 
+     |   case _ => "works!"
+     | }
+res11: String = works!
+
+scala> "   \t " match {
+     |   case NonBlankString(_) => "boo" 
+     |   case _ => "works!"
+     | }
+res12: String = works!
+
+scala> "works!" match {
+     |   case NonBlankString(s) => s 
+     |   case _ => "boo"
+     | }
+res13: String = works!
+```
+
+### NonBlankTrimmedString
+
+```scala
+scala> NonBlankTrimmedString(null)
+res14: Option[String] = None
+
+scala> NonBlankTrimmedString("")
+res15: Option[String] = None
+
+scala> NonBlankTrimmedString(" \n \r \t ")
+res16: Option[String] = None
+
+scala> NonBlankTrimmedString(" a ")
+res17: Option[String] = Some(a)
+
+scala> (null: String) match {
+     |   case NonBlankTrimmedString(_) => "boo" 
+     |   case _ => "works!"
+     | }
+res18: String = works!
+
+scala> "" match {
+     |   case NonBlankTrimmedString(_) => "boo" 
+     |   case _ => "works!"
+     | }
+res19: String = works!
+
+scala> "   \t " match {
+     |   case NonBlankTrimmedString(_) => "boo" 
+     |   case _ => "works!"
+     | }
+res20: String = works!
+
+scala> "  works!\n  " match {
+     |   case NonBlankTrimmedString(s) => s 
+     |   case _ => "boo"
+     | }
+res21: String = works!
 ```
 
 ## Latest stable release

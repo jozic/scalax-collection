@@ -34,4 +34,10 @@ scalacOptions in Tut := filterOutUnusedImports(scalacOptions.value)
 
 scalacOptions in(Compile, console) := filterOutUnusedImports(scalacOptions.value)
 
-initialCommands in console := "import com.daodecode.scalax.collection.extensions._"
+
+initialCommands in console :=
+  """
+    |import com.daodecode.scalax.collection.extensions._
+    |import com.daodecode.scalax._
+    |""".stripMargin
+
