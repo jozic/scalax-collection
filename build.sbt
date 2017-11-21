@@ -2,9 +2,9 @@ name := "scalax-collection"
 
 organization := "com.daodecode"
 
-scalaVersion := "2.12.3"
+scalaVersion := "2.12.4"
 
-crossScalaVersions := Seq("2.11.11", scalaVersion.value)
+crossScalaVersions := Seq("2.11.12", scalaVersion.value)
 
 scalacOptions := Seq(
   "-Xlint",

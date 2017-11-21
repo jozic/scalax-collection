@@ -1,8 +1,8 @@
 package com.daodecode.scalax.collection.extensions
 
-import org.scalatest.Matchers
+import org.scalatest.{FlatSpec, Matchers}
 
-class SeqLikeExtensionTest extends org.scalatest.FlatSpec with Matchers {
+class SeqLikeExtensionTest extends FlatSpec with Matchers {
 
   case class Person(fName: String, lName: String, age: Int)
 
