@@ -26,8 +26,12 @@ scalacOptions := Seq(
 libraryDependencies +=
   "org.scalatest" %% "scalatest" % "3.0.4" % "test"
 
-scalacOptions in Tut := scalacOptions.value
-  .filterNot(Set("-Ywarn-unused", "-Ywarn-unused-import", "-Xlint")) ++
-  Seq("-Xlint:-unused", "-Ywarn-unused:-imports,_")
+def filterOutUnusedImports(options: Seq[String]) =
+  options.filterNot(Set("-Ywarn-unused", "-Ywarn-unused-import", "-Xlint")) ++
+    Seq("-Xlint:-unused", "-Ywarn-unused:-imports,_")
+
+scalacOptions in Tut := filterOutUnusedImports(scalacOptions.value)
+
+scalacOptions in(Compile, console) := filterOutUnusedImports(scalacOptions.value)
 
 initialCommands in console := "import com.daodecode.scalax.collection.extensions._"
