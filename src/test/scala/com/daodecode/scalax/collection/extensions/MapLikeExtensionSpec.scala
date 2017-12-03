@@ -4,7 +4,7 @@ import org.scalatest.{Matchers, FlatSpec}
 
 import scala.collection._
 
-class MapLikeExtensionTest extends FlatSpec with Matchers {
+class MapLikeExtensionSpec extends FlatSpec with Matchers {
 
   "mergeWith" should "merge empty maps" in {
     Map.empty[String, Int].mergedWith(Map.empty[String, Int])(_ + _) should be(Map.empty[String, Int])

@@ -4,7 +4,7 @@ import org.scalatest.{FlatSpec, Matchers}
 
 import scala.collection.mutable.ListBuffer
 
-class IterableLikeExtensionTest extends FlatSpec with Matchers {
+class IterableLikeExtensionSpec extends FlatSpec with Matchers {
 
   "foldLeftWhile" should "behave as regular foldLeft if while condition is true" in {
 

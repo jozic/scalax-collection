@@ -2,7 +2,7 @@ package com.daodecode.scalax.collection.extensions
 
 import org.scalatest.{FlatSpec, Matchers}
 
-class SeqLikeExtensionTest extends FlatSpec with Matchers {
+class SeqLikeExtensionSpec extends FlatSpec with Matchers {
 
   case class Person(fName: String, lName: String, age: Int)
 

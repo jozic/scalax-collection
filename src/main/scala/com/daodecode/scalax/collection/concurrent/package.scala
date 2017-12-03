@@ -23,7 +23,7 @@ package object concurrent {
 
   object ConcurrentSet {
     /**
-     * Builds empty set baked by ConcurrentMap
+     * Builds empty set backed by ConcurrentMap
      *
      * @since 0.1.0
      */
