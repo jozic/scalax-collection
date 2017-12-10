@@ -31,7 +31,7 @@ val xs = List(1 -> "one", 1 -> "ten", 2 -> "two", 2 -> "twenty").distinctBy(_._1
 ### foldLeftWhile/foldRightWhile
 
 ```tut
-val xs = Iterable(List(1,2,3), List(4,5), List(6,7,8,9)).foldLeftWhile(List.empty[Int])(_.size < 4){ case (acc, l) => acc ++ l }
+val xs = Traversable(List(1,2,3), List(4,5), List(6,7,8,9)).foldLeftWhile(List.empty[Int])(_.size < 4){ case (acc, l) => acc ++ l }
 ```
 
 ### toCompleteMap
@@ -95,6 +95,13 @@ Finds the largest element wrapped in `Option` or `None` if iterable is empty
 val m = List.empty[Int].maxOption
 
 val m = List(1,2,1).maxOptionBy(_ * -1)
+```
+
+### transform
+
+Transform only those elements where given partial function is defined
+```tut
+val t = Traversable(1,2,3,4,5).transform { case x if x % 2 == 0 => x + 100 }
 ```
 
 ## Strings Examples

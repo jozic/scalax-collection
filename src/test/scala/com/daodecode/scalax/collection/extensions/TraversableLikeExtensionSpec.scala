@@ -4,7 +4,7 @@ import org.scalatest.{FlatSpec, Matchers}
 
 import scala.collection.mutable.ListBuffer
 
-class IterableLikeExtensionSpec extends FlatSpec with Matchers {
+class TraversableLikeExtensionSpec extends FlatSpec with Matchers {
 
   "foldLeftWhile" should "behave as regular foldLeft if while condition is true" in {
 
@@ -130,6 +130,22 @@ class IterableLikeExtensionSpec extends FlatSpec with Matchers {
     Iterable(2, 1, 3).maxOptionBy(_ * -1) should be(Some(1))
     case class A(i: Int)
     Iterable(A(2), A(1), A(3)).maxOptionBy(_.i) should be(Some(A(3)))
+  }
+
+  "transform" should "behave as map if partial function is defined for all values" in {
+    Seq(1, 2, 3).transform { case x => x * 2 } should be(Seq(2, 4, 6))
+  }
+
+  "transform" should "do nothing if partial function is not defined for all values" in {
+    Seq(1, 2, 3).transform { case x if false => x * 2 } should be(Seq(1, 2, 3))
+  }
+
+  it should "transform only elements where partial function is defined" in {
+    Seq(1, 2, 3, 4, 5, 6).transform { case x if x % 2 == 0 => x * 2 } should be(Seq(1, 4, 3, 8, 5, 12))
+  }
+
+  it should "work on empty traversables" in {
+    Seq.empty[String].transform { case s => s.toLowerCase } should be(Seq.empty[String])
   }
 
 }

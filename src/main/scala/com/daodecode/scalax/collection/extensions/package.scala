@@ -2,6 +2,7 @@ package com.daodecode.scalax.collection
 
 import scala.collection._
 import scala.collection.generic.CanBuildFrom
+import scala.util.control.Breaks
 
 package object extensions {
 
@@ -55,9 +56,9 @@ package object extensions {
   }
 
   /**
-   * @define coll iterable
+   * @define coll traversable
    */
-  implicit class IterableLikeExtension[A, Repr <: IterableLike[A, Repr]](val iterableLike: IterableLike[A, Repr]) extends AnyVal {
+  implicit class TraversableLikeExtension[A, Repr <: TraversableLike[A, Repr]](val traversableLike: TraversableLike[A, Repr]) extends AnyVal {
 
     /** Applies a binary operator to a start value and all elements of this $coll while predicate `p` is satisfied,
       * going left to right.
@@ -78,11 +79,13 @@ package object extensions {
       * @since 0.1.0
       */
     def foldLeftWhile[B](z: B)(p: B => Boolean)(op: (B, A) => B): B = {
+      import Breaks._
       var result = z
-      val it = iterableLike.iterator
-      while (it.hasNext && p(result)) {
-        val next = it.next()
-        result = op(result, next)
+      breakable {
+        for (a <- traversableLike) {
+          if (!p(result)) break
+          result = op(result, a)
+        }
       }
       result
     }
@@ -106,10 +109,10 @@ package object extensions {
       * @since 0.1.0
       */
     def foldRightWhile[B](z: B)(p: B => Boolean)(op: (A, B) => B): B =
-      if (iterableLike.isEmpty) z
+      if (traversableLike.isEmpty) z
       else {
-        val result = iterableLike.tail.foldRightWhile(z)(p)(op)
-        if (p(result)) op(iterableLike.head, result) else result
+        val result = traversableLike.tail.foldRightWhile(z)(p)(op)
+        if (p(result)) op(traversableLike.head, result) else result
       }
 
     /**
@@ -130,8 +133,8 @@ package object extensions {
      **/
     def toCompleteMap[K, V, That](implicit ev: A <:< (K, V), cbf: CanBuildFrom[Repr, V, That]): immutable.Map[K, That] = {
       val m = mutable.Map.empty[K, mutable.Builder[V, That]]
-      for (keyValue <- iterableLike) {
-        val builder = m.getOrElseUpdate(keyValue._1, cbf(iterableLike.repr))
+      for (keyValue <- traversableLike) {
+        val builder = m.getOrElseUpdate(keyValue._1, cbf(traversableLike.repr))
         builder += keyValue._2
       }
       m.mapToMap { case (k, b) => k -> b.result() }
@@ -151,7 +154,7 @@ package object extensions {
       */
     def mapToMap[K, V](f: A => (K, V)): immutable.Map[K, V] = {
       val b = immutable.Map.newBuilder[K, V]
-      for (a <- iterableLike)
+      for (a <- traversableLike)
         b += f(a)
       b.result()
     }
@@ -188,7 +191,7 @@ package object extensions {
      * }}}
      *
      * @return a map of type immutable.Map[A, Int] where Int represents a frequency of key A in original $coll
-      * @since 0.1.1
+     * @since 0.1.1
      */
     def withFrequency: immutable.Map[A, Int] = withFrequencyBy(identity)
 
@@ -204,12 +207,12 @@ package object extensions {
      * }}}
      *
      * @return a map of type immutable.Map[B, Int] where Int represents a frequency of keys,
-      *         obtained from original $coll by applying function `f` to elements
-      * @since 0.2.0
+     *         obtained from original $coll by applying function `f` to elements
+     * @since 0.2.0
      */
     def withFrequencyBy[B](f: A => B): immutable.Map[B, Int] = {
       val m = mutable.Map.empty[B, Int]
-      for (a <- iterableLike) {
+      for (a <- traversableLike) {
         val key = f(a)
         val currentFreq = m.getOrElse(key, 0)
         m.update(key, currentFreq + 1)
@@ -234,10 +237,9 @@ package object extensions {
       * @since 0.1.2
       *
       */
-    def maxOption[B >: A : Ordering]: Option[A] =
-      if (iterableLike.isEmpty) None
-      else Some(iterableLike.max[B])
-
+    def maxOption[B >: A: Ordering]: Option[A] =
+      if (traversableLike.isEmpty) None
+      else Some(traversableLike.max[B])
 
     /**
       * Finds the smallest element wrapped in `Option` or `None` if $coll is empty.
@@ -255,9 +257,9 @@ package object extensions {
       * @return the smallest element wrapped in `Option` or `None` if $coll is empty
       * @since 0.1.2
       */
-    def minOption[B >: A : Ordering]: Option[A] =
-      if (iterableLike.isEmpty) None
-      else Some(iterableLike.min[B])
+    def minOption[B >: A: Ordering]: Option[A] =
+      if (traversableLike.isEmpty) None
+      else Some(traversableLike.min[B])
 
     /**
       * Finds the element where function `f` returns largest value according to `ord`.
@@ -279,8 +281,8 @@ package object extensions {
       * @since 0.1.2
       */
     def maxOptionBy[B: Ordering](f: A => B): Option[A] =
-      if (iterableLike.isEmpty) None
-      else Some(iterableLike.maxBy(f))
+      if (traversableLike.isEmpty) None
+      else Some(traversableLike.maxBy(f))
 
     /**
       * Finds the element where function `f` returns smallest value according to `ord`.
@@ -302,13 +304,55 @@ package object extensions {
       * @since 0.1.2
       */
     def minOptionBy[B: Ordering](f: A => B): Option[A] =
-      if (iterableLike.isEmpty) None
-      else Some(iterableLike.minBy(f))
+      if (traversableLike.isEmpty) None
+      else Some(traversableLike.minBy(f))
+
+    /**
+      * @since 0.3.0
+      */
+    def transform(pf: PartialFunction[A, A])(implicit cbf: CanBuildFrom[Repr, A, Repr]): Repr =
+      traversableLike.map(a => if (pf.isDefinedAt(a)) pf(a) else a)
 
   }
 
-  implicit class MapLikeExtension[K, V, Repr <: MapLike[K, V, Repr] with Map[K, V]]
-  (val mapLike: MapLike[K, V, Repr]) extends AnyVal {
+  /**
+    * @define coll iterable
+    */
+  implicit class IterableLikeExtension[A, Repr <: IterableLike[A, Repr]](
+      val iterableLike: IterableLike[A, Repr])
+      extends AnyVal {
+
+    /** Applies a binary operator to a start value and all elements of this $coll while predicate `p` is satisfied,
+      * going left to right.
+      *
+      * Example:
+      * {{{
+      *   scala> Iterable(List(1,2,3), List(4,5), List(6,7,8,9)).
+      *        | foldLeftWhile(List.empty[Int])(_.size < 4){ case (acc, l) => acc ++ l }
+      *   res1: List[Int] = List(1, 2, 3, 4, 5)
+      * }}}
+      *
+      * @param   z    the start value.
+      * @param   p    the predicate used to test if folding should continue.
+      * @param   op   the binary operator.
+      * @tparam  B    the result type of the binary operator.
+      * @return  the result of inserting `op` between consecutive elements of this $coll while predicate `p` is satisfied,
+      *          going left to right with the start value `z` on the left.
+      * @since 0.1.0
+      */
+    def foldLeftWhile[B](z: B)(p: B => Boolean)(op: (B, A) => B): B = {
+      var result = z
+      val it = iterableLike.iterator
+      while (it.hasNext && p(result)) {
+        val next = it.next()
+        result = op(result, next)
+      }
+      result
+    }
+
+  }
+
+  implicit class MapLikeExtension[K, V, Repr <: MapLike[K, V, Repr] with Map[K, V]](val mapLike: MapLike[K, V, Repr]) extends AnyVal {
 
     /**
      * Merges this map with `another` using function `f`
