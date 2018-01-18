@@ -41,3 +41,12 @@ initialCommands in console :=
     |import com.daodecode.scalax._
     |""".stripMargin
 
+
+//benchmarks
+
+lazy val `scalax-collection` = project.in(file("."))
+
+lazy val benchmarks =
+  project
+    .dependsOn(`scalax-collection`)
+    .enablePlugins(JmhPlugin)

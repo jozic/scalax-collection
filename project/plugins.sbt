@@ -11,3 +11,5 @@ addSbtPlugin("com.jsuereth" % "sbt-pgp" % "1.1.0")
 addSbtPlugin("org.tpolecat" % "tut-plugin" % "0.6.2")
 
 addSbtPlugin("com.github.tkawachi" % "sbt-doctest" % "0.7.0")
+
+addSbtPlugin("pl.project13.scala" % "sbt-jmh" % "0.3.2")
