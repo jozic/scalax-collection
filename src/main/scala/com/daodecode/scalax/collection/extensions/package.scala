@@ -311,6 +311,27 @@ package object extensions {
   (val mapLike: MapLike[K, V, Repr]) extends AnyVal {
 
     /**
+      *
+      * @param another
+      * @param f
+      * @return
+      * @since 0.2.3
+      */
+    def mergedUsingKeyWith(another: Map[K, V])(f: (K, V, V) => V): Repr =
+      if (another.isEmpty) mapLike.asInstanceOf[Repr]
+      else if (mapLike.isEmpty) another.asInstanceOf[Repr]
+      else {
+        val mapBuilder = new mutable.MapBuilder[K, V, Repr](mapLike.asInstanceOf[Repr])
+        another.foreach { case (k, v) =>
+          mapLike.get(k) match {
+            case Some(ev) => mapBuilder += k -> f(k, ev, v)
+            case _ => mapBuilder += k -> v
+          }
+        }
+        mapBuilder.result()
+      }
+
+    /**
      * Merges this map with `another` using function `f`
      * to calculate result value for duplicate keys.
      * Value from this map is the first argument to `f`
@@ -328,17 +349,7 @@ package object extensions {
      *
      */
     def mergedWith(another: Map[K, V])(f: (V, V) => V): Repr =
-      if (another.isEmpty) mapLike.asInstanceOf[Repr]
-      else {
-        val mapBuilder = new mutable.MapBuilder[K, V, Repr](mapLike.asInstanceOf[Repr])
-        another.foreach { case (k, v) =>
-          mapLike.get(k) match {
-            case Some(ev) => mapBuilder += k -> f(ev, v)
-            case _ => mapBuilder += k -> v
-          }
-        }
-        mapBuilder.result()
-      }
+      mergedUsingKeyWith(another)((_: K, v1: V, v2: V) => f(v1, v2))
   }
 
 }

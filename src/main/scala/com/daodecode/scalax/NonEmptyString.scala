@@ -1,5 +1,31 @@
 package com.daodecode.scalax
 
+object EmptyString extends (String => Boolean) {
+
+  @inline
+  def apply(s: String): Boolean = s match {
+    case NonEmptyString(_) => false
+    case _                 => true
+  }
+
+  @inline
+  def unapply(s: String): Boolean = apply(s)
+
+}
+
+object EmptyOptionString extends (Option[String] => Boolean) {
+
+  @inline
+  def apply(s: Option[String]): Boolean = s match {
+    case Some(NonEmptyString(_)) => false
+    case _                       => true
+  }
+
+  @inline
+  def unapply(s: Option[String]): Boolean = apply(s)
+
+}
+
 object NonEmptyString extends (String => Option[String]) {
 
   /**
