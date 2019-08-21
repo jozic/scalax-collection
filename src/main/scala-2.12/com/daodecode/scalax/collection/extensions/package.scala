@@ -24,7 +24,13 @@ package object extensions {
       * @since 0.1.0
       */
     def distinctBy[B](f: A => B)(implicit cbf: CanBuildFrom[Repr, A, Repr]): Repr =
-      distinctBy(f, (_, _) => true)(cbf)
+      distinctByUsing(f, (_, _) => true)(cbf)
+
+    // $COVERAGE-OFF$
+    @deprecated("Use distinctByUsing", "0.3.0")
+    def distinctBy[B](f: A => B, takeFirst: (A, A) => Boolean)(implicit cbf: CanBuildFrom[Repr, A, Repr]): Repr =
+      distinctByUsing(f, (_, _) => true)(cbf)
+    // $COVERAGE-ON$
 
     /** Builds a new $coll from this $coll without any duplicate elements (as
       * determined by `==` after applying transforming function `f`).
@@ -34,14 +40,14 @@ package object extensions {
       * Example:
       * {{{
       *   scala> List(1 -> "one", 1 -> "ten", 2 -> "two", 2 -> "twenty").
-      *        | distinctBy(_._1, takeFirst = _._2.length > _._2.length)
+      *        | distinctByUsing(_._1, takeFirst = _._2.length > _._2.length)
       *   res1: List[(Int, String)] = List((1,ten), (2,twenty))
       * }}}
       *
       * @return  A new $coll which contains selected occurrence of every element of this $coll.
       * @since 0.1.1
       */
-    def distinctBy[B](f: A => B, takeFirst: (A, A) => Boolean)(implicit cbf: CanBuildFrom[Repr, A, Repr]): Repr = {
+    def distinctByUsing[B](f: A => B, takeFirst: (A, A) => Boolean)(implicit cbf: CanBuildFrom[Repr, A, Repr]): Repr = {
       val seen = mutable.LinkedHashMap.empty[B, A]
       for (x <- seqLike) {
         val fx = f(x)

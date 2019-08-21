@@ -2,15 +2,16 @@ package com.daodecode.scalax.collection.concurrent
 
 import java.util.concurrent.ConcurrentHashMap
 
-import org.scalatest.{FlatSpec, Matchers}
-
 import scala.collection.JavaConverters._
+import scala.collection.mutable
+
+import org.scalatest.{FlatSpec, Matchers}
 
 class ConcurrentSpec extends FlatSpec with Matchers {
 
   "ConcurrentMap.empty" should "create an empty mutable concurrent Map" in {
     val emptyConcurrentMap = ConcurrentMap.empty[Int, String]
-    emptyConcurrentMap should be('empty)
+    emptyConcurrentMap shouldBe empty
 
     emptyConcurrentMap shouldBe a[ConcurrentMap[_, _]]
     emptyConcurrentMap.asJava shouldBe a[ConcurrentHashMap[_, _]]
@@ -22,9 +23,9 @@ class ConcurrentSpec extends FlatSpec with Matchers {
 
   "ConcurrentSet.empty" should "create an empty mutable concurrent Set" in {
     val emptyConcurrentSet = ConcurrentSet.empty[Int]
-    emptyConcurrentSet should be('empty)
+    emptyConcurrentSet shouldBe empty
 
-    emptyConcurrentSet shouldBe a[collection.mutable.Set[_]]
+    emptyConcurrentSet shouldBe a[mutable.Set[_]]
 
     emptyConcurrentSet.add(1) should be(true)
 

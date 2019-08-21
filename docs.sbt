@@ -1,7 +1,7 @@
 //sbt-doctest and tut settings
 
 libraryDependencies +=
-  "org.scalacheck" %% "scalacheck" % "1.13.5" % "test"
+  "org.scalacheck" %% "scalacheck" % "1.14.0" % "test"
 
 doctestTestFramework := DoctestTestFramework.ScalaTest
 

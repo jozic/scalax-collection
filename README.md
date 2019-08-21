@@ -4,9 +4,9 @@ scalax-collection [![Build Status](https://travis-ci.org/jozic/scalax-collection
 A small library of extension methods for standard scala collections library. 
 Published to maven central.
 
-| 2.10 | 2.11 | 2.12 |
-|------|------|------|
-|[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.daodecode/scalax-collection_2.10/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.daodecode/scalax-collection_2.10) | [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.daodecode/scalax-collection_2.11/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.daodecode/scalax-collection_2.11) | [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.daodecode/scalax-collection_2.12/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.daodecode/scalax-collection_2.12) |
+| 2.10 | 2.11 | 2.12 | 2.13 |
+|------|------|------|------|
+|[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.daodecode/scalax-collection_2.10/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.daodecode/scalax-collection_2.10) | [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.daodecode/scalax-collection_2.11/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.daodecode/scalax-collection_2.11) | [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.daodecode/scalax-collection_2.12/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.daodecode/scalax-collection_2.12) | [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.daodecode/scalax-collection_2.13/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.daodecode/scalax-collection_2.13) |
 
 
 ## Collection Examples
@@ -25,11 +25,15 @@ scala> val xs = List(1 -> "one", 1 -> "ten", 2 -> "two", 2 -> "twenty").distinct
 xs: List[(Int, String)] = List((1,one), (2,two))
 ```
 
+*NOTE: Since Scala 2.13 this is available in standard library*
+
 or preserving any duplicate you want
 ```scala
-scala> val xs = List(1 -> "one", 1 -> "ten", 2 -> "two", 2 -> "twenty").distinctBy(_._1, takeFirst = _._2.length > _._2.length)
+scala> val xs = List(1 -> "one", 1 -> "ten", 2 -> "two", 2 -> "twenty").distinctByUsing(_._1, takeFirst = _._2.length > _._2.length)
 xs: List[(Int, String)] = List((1,ten), (2,twenty))
 ```
+
+*NOTE: Before 0.3.0 this method was named distinctBy*
 
 ### foldLeftWhile/foldRightWhile
 
@@ -39,6 +43,8 @@ xs: List[Int] = List(1, 2, 3, 4, 5)
 ```
 
 ### toCompleteMap
+
+since Scala 2.13 can be seen as equivavent to `groupMap(_._1)(_._2)`
 
 ```scala
 scala> val cm = List(1 -> "1", 2 -> "2", 1 -> "11").toCompleteMap
@@ -56,12 +62,16 @@ m: scala.collection.immutable.Map[Int,String] = Map(1 -> one, 2 -> two)
 
 ### toMapWithKey
 
+since Scala 2.13 can be see as equivavent to `groupMapReduce(f)(identity)((b,_) => b)`
+
 ```scala
 scala> val m = List("1", "2", "1").toMapWithKey(_.toInt)
 m: scala.collection.immutable.Map[Int,String] = Map(1 -> 1, 2 -> 2)
 ```
 
 ### toMapWithValue
+
+since Scala 2.13 can be see as equivavent to `groupMapReduce(identity)(f)((b,_) => b)`
 
 ```scala
 scala> val m = List("1", "2", "1").toMapWithValue(_.toInt)
@@ -70,12 +80,16 @@ m: scala.collection.immutable.Map[String,Int] = Map(1 -> 1, 2 -> 2)
 
 ### withFrequency
 
+since Scala 2.13 can be see as equivavent to `groupMapReduce(identity)(_ => 1)(_ + _)`
+
 ```scala
 scala> val fm = List("a", "b", "c", "a", "b", "d").withFrequency
 fm: scala.collection.immutable.Map[String,Int] = Map(b -> 2, d -> 1, a -> 2, c -> 1)
 ```
 
 ### withFrequencyBy
+
+since Scala 2.13 can be see as equivavent to `groupMapReduce(f)(_ => 1)(_ + _)`
 
 ```scala
 scala> val fm = List("ab", "bc", "cd", "ab", "bc", "de").withFrequencyBy(_.head)
@@ -101,6 +115,8 @@ scala> val m = List(1,2,1).minOptionBy(_ * -1)
 m: Option[Int] = Some(2)
 ```
 
+*NOTE: Since Scala 2.13 this is available in standard library*
+
 ### maxOption/maxOptionBy
 
 Finds the largest element wrapped in `Option` or `None` if iterable is empty
@@ -111,6 +127,8 @@ m: Option[Int] = None
 scala> val m = List(1,2,1).maxOptionBy(_ * -1)
 m: Option[Int] = Some(1)
 ```
+
+*NOTE: Since Scala 2.13 this is available in standard library*
 
 ## Strings Examples
 
@@ -234,7 +252,7 @@ res21: String = works!
 
 ### sbt
 ```scala
-libraryDependencies += "com.daodecode" %% "scalax-collection" % "0.2.0"
+libraryDependencies += "com.daodecode" %% "scalax-collection" % "0.3.0"
 ```
 ### maven
 
@@ -242,7 +260,7 @@ set `<scala.binary.version>` property to scala version you need, like
 
 ```xml
 <properties>
-    <scala.binary.version>2.12</scala.binary.version>
+    <scala.binary.version>2.13</scala.binary.version>
 </properties>
 
 ```
@@ -252,48 +270,6 @@ set `<scala.binary.version>` property to scala version you need, like
 <dependency>
     <groupId>com.daodecode</groupId>
     <artifactId>scalax-collection_${scala.binary.version}</artifactId>
-    <version>0.2.0</version>
-</dependency>
-```
-
-## Latest snapshot
-
-First add sonatype snapshots repository to your settings
-
-### sbt
-
-```scala
-resolvers += Resolver.sonatypeRepo("snapshots")
-```
-
-### maven
-
-```xml
-<repository>
-    <id>snapshots-repo</id>
-    <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-    <releases><enabled>false</enabled></releases>
-    <snapshots><enabled>true</enabled></snapshots>
-</repository>
-```
-
-then add snapshot as a dependency
-
-### sbt
-```scala
-libraryDependencies += "com.daodecode" %% "scalax-collection" % "0.2.1-SNAPSHOT"
-```
-### maven
-```xml
-<properties>
-    <scala.binary.version>2.12</scala.binary.version>
-</properties>
-```
- 
-```xml
-<dependency>
-    <groupId>com.daodecode</groupId>
-    <artifactId>scalax-collection_${scala.binary.version}</artifactId>
-    <version>0.2.1-SNAPSHOT</version>
+    <version>0.3.0</version>
 </dependency>
 ```

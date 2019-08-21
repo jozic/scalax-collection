@@ -37,10 +37,10 @@ class SeqLikeExtensionSpec extends FlatSpec with Matchers {
     assertEvaluateOnlyOnce(Stream.empty[Person])
   }
 
-  it should "respect selector if one is provided" in {
+  "distinctByUsing" should "respect selector if one is provided" in {
     val people = Seq(eugeneM, xeniya, eugeneP, vasiliy)
 
-    people.distinctBy(_.fName) should be(Seq(eugeneM, xeniya, vasiliy))
-    people.distinctBy(_.fName, (p1, p2) => p1.lName == "Platonov") should be(Seq(eugeneP, xeniya, vasiliy))
+    people.distinctByUsing(_.fName, (_,_) => true) should be(Seq(eugeneM, xeniya, vasiliy))
+    people.distinctByUsing(_.fName, (p1, p2) => p1.lName == "Platonov") should be(Seq(eugeneP, xeniya, vasiliy))
   }
 }

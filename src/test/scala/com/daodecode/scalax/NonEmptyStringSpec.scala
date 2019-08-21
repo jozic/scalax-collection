@@ -11,7 +11,7 @@ class NonEmptyStringSpec extends FlatSpec with Matchers {
       Seq.fill(Random.nextInt(10))(Random.nextPrintableChar()).mkString("")
 
     val nonEmptyWords = Seq.fill(100)(randomWord).filter(_.nonEmpty)
-    nonEmptyWords should not be 'empty
+    nonEmptyWords should not be empty
     nonEmptyWords.foreach { word =>
       NonEmptyString(word) should be(Some(word))
     }

@@ -11,7 +11,7 @@ class NonBlankTrimmedStringSpec extends FlatSpec with Matchers {
       Seq.fill(Random.nextInt(100))(Random.nextPrintableChar()).mkString("")
 
     val nonBlankWords = Seq.fill(1000)(randomWord).filter(_.trim.nonEmpty)
-    nonBlankWords should not be 'empty
+    nonBlankWords should not be empty
     nonBlankWords.foreach { word =>
       NonBlankTrimmedString(s"   $word \n ") should be(Some(word.trim))
     }

@@ -44,7 +44,9 @@ class IterableLikeExtensionSpec extends FlatSpec with Matchers {
 
   "toCompleteMap" should "group all values by keys" in {
     List("1" -> "10", "2" -> "20", "1" -> "11").toCompleteMap should be(Map("1" -> List("10", "11"), "2" -> List("20")))
-    ListBuffer("1" -> "10", "2" -> "20", "1" -> "11").toCompleteMap should be(Map("1" -> ListBuffer("10", "11"), "2" -> ListBuffer("20")))
+    ListBuffer("1" -> "10", "2" -> "20", "1" -> "11").toCompleteMap should be(
+      Map("1" -> ListBuffer("10", "11"), "2" -> ListBuffer("20"))
+    )
   }
 
   it should "return empty map if source is empty" in {
@@ -53,14 +55,12 @@ class IterableLikeExtensionSpec extends FlatSpec with Matchers {
 
   "mapToMap" should "create a map" in {
     List("1", "2", "1").mapToMap(si => si.toInt -> si) should be(Map(1 -> "1", 2 -> "2"))
-    List("1" -> "one", "2" -> "two")
-      .mapToMap { case (i, s) => i.toInt -> s } should be(Map(1 -> "one", 2 -> "two"))
+    List("1" -> "one", "2" -> "two").mapToMap { case (i, s) => i.toInt -> s } should be(Map(1 -> "one", 2 -> "two"))
   }
 
   it should "return empty map if source is empty" in {
     List.empty[String].mapToMap(si => si.toInt -> si) should be(Map[Int, String]())
-    List.empty[(String, String)]
-      .mapToMap { case (i, s) => i.toInt -> s } should be(Map[Int, String]())
+    List.empty[(String, String)].mapToMap { case (i, s) => i.toInt -> s } should be(Map[Int, String]())
   }
 
   "toMapWithKey" should "create a map" in {
@@ -89,7 +89,8 @@ class IterableLikeExtensionSpec extends FlatSpec with Matchers {
 
   "withFrequencyBy" should "calculate frequency of each element in the source after applying function f" in {
     Iterable("ab", "bc", "cd", "ae", "bk", "dd").withFrequencyBy(_.head) should be(
-      Map('a' -> 2, 'b' -> 2, 'c' -> 1, 'd' -> 1))
+      Map('a' -> 2, 'b' -> 2, 'c' -> 1, 'd' -> 1)
+    )
   }
 
   it should "return empty map if source is empty" in {
