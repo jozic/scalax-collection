@@ -25,7 +25,9 @@ scala> val xs = List(1 -> "one", 1 -> "ten", 2 -> "two", 2 -> "twenty").distinct
 xs: List[(Int, String)] = List((1,one), (2,two))
 ```
 
-*NOTE: Since Scala 2.13 this is available in standard library*
+*NOTE: Since Scala 2.13 this method is available in standard library*
+
+### distinctByUsing
 
 or preserving any duplicate you want
 ```scala
@@ -33,7 +35,7 @@ scala> val xs = List(1 -> "one", 1 -> "ten", 2 -> "two", 2 -> "twenty").distinct
 xs: List[(Int, String)] = List((1,ten), (2,twenty))
 ```
 
-*NOTE: Before 0.3.0 this method was named distinctBy*
+*NOTE: Before 0.3.0 this method was named `distinctBy`*
 
 ### foldLeftWhile/foldRightWhile
 
@@ -44,16 +46,16 @@ xs: List[Int] = List(1, 2, 3, 4, 5)
 
 ### toCompleteMap
 
-since Scala 2.13 can be seen as equivavent to `groupMap(_._1)(_._2)`
+*since Scala 2.13 can be seen as equivalent to `groupMap(_._1)(_._2)`*
 
 ```scala
 scala> val cm = List(1 -> "1", 2 -> "2", 1 -> "11").toCompleteMap
-cm: scala.collection.immutable.Map[Int,List[String]] = Map(2 -> List(2), 1 -> List(1, 11))
+cm: scala.collection.immutable.Map[Int,List[String]] = Map(1 -> List(1, 11), 2 -> List(2))
 ```
 
 ### mapToMap
 
-can be seen as more efficient replacement for `map().toMap` combination
+*can be seen as more efficient replacement for `map().toMap` combination*
 
 ```scala
 scala> val m = List("1" -> "one", "2" -> "two").mapToMap { case (i, s) => i.toInt -> s }
@@ -62,7 +64,7 @@ m: scala.collection.immutable.Map[Int,String] = Map(1 -> one, 2 -> two)
 
 ### toMapWithKey
 
-since Scala 2.13 can be see as equivavent to `groupMapReduce(f)(identity)((b,_) => b)`
+*since Scala 2.13 can be seen as equivalent to `groupMapReduce(f)(identity)((b,_) => b)`*
 
 ```scala
 scala> val m = List("1", "2", "1").toMapWithKey(_.toInt)
@@ -71,7 +73,7 @@ m: scala.collection.immutable.Map[Int,String] = Map(1 -> 1, 2 -> 2)
 
 ### toMapWithValue
 
-since Scala 2.13 can be see as equivavent to `groupMapReduce(identity)(f)((b,_) => b)`
+*since Scala 2.13 can be seen as equivalent to `groupMapReduce(identity)(f)((b,_) => b)`*
 
 ```scala
 scala> val m = List("1", "2", "1").toMapWithValue(_.toInt)
@@ -80,20 +82,20 @@ m: scala.collection.immutable.Map[String,Int] = Map(1 -> 1, 2 -> 2)
 
 ### withFrequency
 
-since Scala 2.13 can be see as equivavent to `groupMapReduce(identity)(_ => 1)(_ + _)`
+*since Scala 2.13 can be seen as equivalent to `groupMapReduce(identity)(_ => 1)(_ + _)`*
 
 ```scala
 scala> val fm = List("a", "b", "c", "a", "b", "d").withFrequency
-fm: scala.collection.immutable.Map[String,Int] = Map(b -> 2, d -> 1, a -> 2, c -> 1)
+fm: scala.collection.immutable.Map[String,Int] = Map(a -> 2, b -> 2, c -> 1, d -> 1)
 ```
 
 ### withFrequencyBy
 
-since Scala 2.13 can be see as equivavent to `groupMapReduce(f)(_ => 1)(_ + _)`
+*since Scala 2.13 can be seen as equivalent to `groupMapReduce(f)(_ => 1)(_ + _)`*
 
 ```scala
 scala> val fm = List("ab", "bc", "cd", "ab", "bc", "de").withFrequencyBy(_.head)
-fm: scala.collection.immutable.Map[Char,Int] = Map(b -> 2, d -> 1, a -> 2, c -> 1)
+fm: scala.collection.immutable.Map[Char,Int] = Map(a -> 2, b -> 2, c -> 1, d -> 1)
 ```
 
 ### mergedWith
@@ -112,6 +114,9 @@ scala> val m = List.empty[Int].minOption
 m: Option[Int] = None
 
 scala> val m = List(1,2,1).minOptionBy(_ * -1)
+       val m = List(1,2,1).minOptionBy(_ * -1)
+                           ^
+On line 2: warning: method minOptionBy in class IterableOpsExtension is deprecated (since 0.3.0): Use minByOption from standard library
 m: Option[Int] = Some(2)
 ```
 
@@ -125,6 +130,9 @@ scala> val m = List.empty[Int].maxOption
 m: Option[Int] = None
 
 scala> val m = List(1,2,1).maxOptionBy(_ * -1)
+       val m = List(1,2,1).maxOptionBy(_ * -1)
+                           ^
+On line 2: warning: method maxOptionBy in class IterableOpsExtension is deprecated (since 0.3.0): Use maxByOption from standard library
 m: Option[Int] = Some(1)
 ```
 

@@ -23,14 +23,16 @@ preserving first duplicate
 val xs = List(1 -> "one", 1 -> "ten", 2 -> "two", 2 -> "twenty").distinctBy(_._1)
 ```
 
-*NOTE: Since Scala 2.13 this is available in standard library*
+*NOTE: Since Scala 2.13 this method is available in standard library*
+
+### distinctByUsing
 
 or preserving any duplicate you want
 ```tut
 val xs = List(1 -> "one", 1 -> "ten", 2 -> "two", 2 -> "twenty").distinctByUsing(_._1, takeFirst = _._2.length > _._2.length)
 ```
 
-*NOTE: Before 0.3.0 this method was named distinctBy*
+*NOTE: Before 0.3.0 this method was named `distinctBy`*
 
 ### foldLeftWhile/foldRightWhile
 
@@ -40,7 +42,7 @@ val xs = Iterable(List(1,2,3), List(4,5), List(6,7,8,9)).foldLeftWhile(List.empt
 
 ### toCompleteMap
 
-since Scala 2.13 can be seen as equivalent to `groupMap(_._1)(_._2)`
+*since Scala 2.13 can be seen as equivalent to `groupMap(_._1)(_._2)`*
 
 ```tut
 val cm = List(1 -> "1", 2 -> "2", 1 -> "11").toCompleteMap
@@ -48,7 +50,7 @@ val cm = List(1 -> "1", 2 -> "2", 1 -> "11").toCompleteMap
 
 ### mapToMap
 
-can be seen as more efficient replacement for `map().toMap` combination
+*can be seen as more efficient replacement for `map().toMap` combination*
 
 ```tut
 val m = List("1" -> "one", "2" -> "two").mapToMap { case (i, s) => i.toInt -> s }
@@ -56,7 +58,7 @@ val m = List("1" -> "one", "2" -> "two").mapToMap { case (i, s) => i.toInt -> s 
 
 ### toMapWithKey
 
-since Scala 2.13 can be see as equivalent to `groupMapReduce(f)(identity)((b,_) => b)`
+*since Scala 2.13 can be seen as equivalent to `groupMapReduce(f)(identity)((b,_) => b)`*
 
 ```tut
 val m = List("1", "2", "1").toMapWithKey(_.toInt)
@@ -64,7 +66,7 @@ val m = List("1", "2", "1").toMapWithKey(_.toInt)
 
 ### toMapWithValue
 
-since Scala 2.13 can be see as equivalent to `groupMapReduce(identity)(f)((b,_) => b)`
+*since Scala 2.13 can be seen as equivalent to `groupMapReduce(identity)(f)((b,_) => b)`*
 
 ```tut
 val m = List("1", "2", "1").toMapWithValue(_.toInt)
@@ -72,7 +74,7 @@ val m = List("1", "2", "1").toMapWithValue(_.toInt)
 
 ### withFrequency
 
-since Scala 2.13 can be see as equivalent to `groupMapReduce(identity)(_ => 1)(_ + _)`
+*since Scala 2.13 can be seen as equivalent to `groupMapReduce(identity)(_ => 1)(_ + _)`*
 
 ```tut
 val fm = List("a", "b", "c", "a", "b", "d").withFrequency
@@ -80,7 +82,7 @@ val fm = List("a", "b", "c", "a", "b", "d").withFrequency
 
 ### withFrequencyBy
 
-since Scala 2.13 can be see as equivalent to `groupMapReduce(f)(_ => 1)(_ + _)`
+*since Scala 2.13 can be seen as equivalent to `groupMapReduce(f)(_ => 1)(_ + _)`*
 
 ```tut
 val fm = List("ab", "bc", "cd", "ab", "bc", "de").withFrequencyBy(_.head)
