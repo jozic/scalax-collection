@@ -12,14 +12,14 @@ Published to maven central.
 ## Collection Examples
 
 An import needed for examples to work:
-```tut
+```scala mdoc
 import com.daodecode.scalax.collection.extensions._
 ```
 
 ### distinctBy
 
 preserving first duplicate
-```tut
+```scala mdoc
 val xs = List(1 -> "one", 1 -> "ten", 2 -> "two", 2 -> "twenty").distinctBy(_._1)
 ```
 
@@ -28,7 +28,7 @@ val xs = List(1 -> "one", 1 -> "ten", 2 -> "two", 2 -> "twenty").distinctBy(_._1
 ### distinctByUsing
 
 or preserving any duplicate you want
-```tut
+```scala mdoc:nest
 val xs = List(1 -> "one", 1 -> "ten", 2 -> "two", 2 -> "twenty").distinctByUsing(_._1, takeFirst = _._2.length > _._2.length)
 ```
 
@@ -36,7 +36,7 @@ val xs = List(1 -> "one", 1 -> "ten", 2 -> "two", 2 -> "twenty").distinctByUsing
 
 ### foldLeftWhile/foldRightWhile
 
-```tut
+```scala mdoc:nest
 val xs = Iterable(List(1,2,3), List(4,5), List(6,7,8,9)).foldLeftWhile(List.empty[Int])(_.size < 4){ case (acc, l) => acc ++ l }
 ```
 
@@ -44,7 +44,7 @@ val xs = Iterable(List(1,2,3), List(4,5), List(6,7,8,9)).foldLeftWhile(List.empt
 
 *since Scala 2.13 can be seen as equivalent to `groupMap(_._1)(_._2)`*
 
-```tut
+```scala mdoc:nest
 val cm = List(1 -> "1", 2 -> "2", 1 -> "11").toCompleteMap
 ```
 
@@ -52,7 +52,7 @@ val cm = List(1 -> "1", 2 -> "2", 1 -> "11").toCompleteMap
 
 *can be seen as more efficient replacement for `map().toMap` combination*
 
-```tut
+```scala mdoc:nest
 val m = List("1" -> "one", "2" -> "two").mapToMap { case (i, s) => i.toInt -> s }
 ```
 
@@ -60,7 +60,7 @@ val m = List("1" -> "one", "2" -> "two").mapToMap { case (i, s) => i.toInt -> s 
 
 *since Scala 2.13 can be seen as equivalent to `groupMapReduce(f)(identity)((b,_) => b)`*
 
-```tut
+```scala mdoc:nest
 val m = List("1", "2", "1").toMapWithKey(_.toInt)
 ```
 
@@ -68,7 +68,7 @@ val m = List("1", "2", "1").toMapWithKey(_.toInt)
 
 *since Scala 2.13 can be seen as equivalent to `groupMapReduce(identity)(f)((b,_) => b)`*
 
-```tut
+```scala mdoc:nest
 val m = List("1", "2", "1").toMapWithValue(_.toInt)
 ```
 
@@ -76,7 +76,7 @@ val m = List("1", "2", "1").toMapWithValue(_.toInt)
 
 *since Scala 2.13 can be seen as equivalent to `groupMapReduce(identity)(_ => 1)(_ + _)`*
 
-```tut
+```scala mdoc:nest
 val fm = List("a", "b", "c", "a", "b", "d").withFrequency
 ```
 
@@ -84,24 +84,24 @@ val fm = List("a", "b", "c", "a", "b", "d").withFrequency
 
 *since Scala 2.13 can be seen as equivalent to `groupMapReduce(f)(_ => 1)(_ + _)`*
 
-```tut
+```scala mdoc:nest
 val fm = List("ab", "bc", "cd", "ab", "bc", "de").withFrequencyBy(_.head)
 ```
 
 ### mergedWith
 
 Merges two maps using provided function to merge values for duplicate keys
-```tut
+```scala mdoc:nest
 val merged = Map("1" -> 1, "2" -> 2).mergedWith(Map("1" -> 1, "2" -> 2))(_ + _)
 ```
 
 ### minOption/minOptionBy
 
 Finds the smallest element wrapped in `Option` or `None` if iterable is empty
-```tut
-val m = List.empty[Int].minOption
+```scala mdoc:nest
+val m1 = List.empty[Int].minOption
 
-val m = List(1,2,1).minOptionBy(_ * -1)
+val m2 = List(1,2,1).minOptionBy(_ * -1)
 ```
 
 *NOTE: Since Scala 2.13 this is available in standard library*
@@ -109,10 +109,10 @@ val m = List(1,2,1).minOptionBy(_ * -1)
 ### maxOption/maxOptionBy
 
 Finds the largest element wrapped in `Option` or `None` if iterable is empty
-```tut
-val m = List.empty[Int].maxOption
+```scala mdoc:nest
+val m1 = List.empty[Int].maxOption
 
-val m = List(1,2,1).maxOptionBy(_ * -1)
+val m2 = List(1,2,1).maxOptionBy(_ * -1)
 ```
 
 *NOTE: Since Scala 2.13 this is available in standard library*
@@ -120,12 +120,12 @@ val m = List(1,2,1).maxOptionBy(_ * -1)
 ## Strings Examples
 
 An import needed for examples to work:
-```tut
+```scala mdoc:nest
 import com.daodecode.scalax._
 ```
 ### NonEmptyString
 
-```tut
+```scala mdoc
 NonEmptyString(null)
 NonEmptyString("")
 NonEmptyString(" a ")
@@ -148,7 +148,7 @@ NonEmptyString(" a ")
 
 ### NonBlankString
 
-```tut
+```scala mdoc
 NonBlankString(null)
 NonBlankString("")
 NonBlankString(" \n \r \t ")
@@ -177,7 +177,7 @@ NonBlankString(" a ")
 
 ### NonBlankTrimmedString
 
-```tut
+```scala mdoc
 NonBlankTrimmedString(null)
 NonBlankTrimmedString("")
 NonBlankTrimmedString(" \n \r \t ")

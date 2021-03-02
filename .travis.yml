@@ -1,9 +1,10 @@
 language: scala
 scala:
-  - "2.12.9"
-  - "2.13.0"
+  - "2.12.13"
+  - "2.13.5"
 jdk:
   - openjdk8
+  - openjdk11
 
-script: "sbt scoverage tut"
+script: "sbt scoverage mdoc"
 after_success: "sbt coveralls"

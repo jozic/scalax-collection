@@ -13,7 +13,6 @@ Published to maven central.
 
 An import needed for examples to work:
 ```scala
-scala> import com.daodecode.scalax.collection.extensions._
 import com.daodecode.scalax.collection.extensions._
 ```
 
@@ -21,8 +20,8 @@ import com.daodecode.scalax.collection.extensions._
 
 preserving first duplicate
 ```scala
-scala> val xs = List(1 -> "one", 1 -> "ten", 2 -> "two", 2 -> "twenty").distinctBy(_._1)
-xs: List[(Int, String)] = List((1,one), (2,two))
+val xs = List(1 -> "one", 1 -> "ten", 2 -> "two", 2 -> "twenty").distinctBy(_._1)
+// xs: List[(Int, String)] = List((1, "one"), (2, "two"))
 ```
 
 *NOTE: Since Scala 2.13 this method is available in standard library*
@@ -31,8 +30,8 @@ xs: List[(Int, String)] = List((1,one), (2,two))
 
 or preserving any duplicate you want
 ```scala
-scala> val xs = List(1 -> "one", 1 -> "ten", 2 -> "two", 2 -> "twenty").distinctByUsing(_._1, takeFirst = _._2.length > _._2.length)
-xs: List[(Int, String)] = List((1,ten), (2,twenty))
+val xs = List(1 -> "one", 1 -> "ten", 2 -> "two", 2 -> "twenty").distinctByUsing(_._1, takeFirst = _._2.length > _._2.length)
+// xs: List[(Int, String)] = List((1, "ten"), (2, "twenty"))
 ```
 
 *NOTE: Before 0.3.0 this method was named `distinctBy`*
@@ -40,8 +39,8 @@ xs: List[(Int, String)] = List((1,ten), (2,twenty))
 ### foldLeftWhile/foldRightWhile
 
 ```scala
-scala> val xs = Iterable(List(1,2,3), List(4,5), List(6,7,8,9)).foldLeftWhile(List.empty[Int])(_.size < 4){ case (acc, l) => acc ++ l }
-xs: List[Int] = List(1, 2, 3, 4, 5)
+val xs = Iterable(List(1,2,3), List(4,5), List(6,7,8,9)).foldLeftWhile(List.empty[Int])(_.size < 4){ case (acc, l) => acc ++ l }
+// xs: List[Int] = List(1, 2, 3, 4, 5)
 ```
 
 ### toCompleteMap
@@ -49,8 +48,8 @@ xs: List[Int] = List(1, 2, 3, 4, 5)
 *since Scala 2.13 can be seen as equivalent to `groupMap(_._1)(_._2)`*
 
 ```scala
-scala> val cm = List(1 -> "1", 2 -> "2", 1 -> "11").toCompleteMap
-cm: scala.collection.immutable.Map[Int,List[String]] = Map(1 -> List(1, 11), 2 -> List(2))
+val cm = List(1 -> "1", 2 -> "2", 1 -> "11").toCompleteMap
+// cm: Map[Int, List[String]] = Map(1 -> List("1", "11"), 2 -> List("2"))
 ```
 
 ### mapToMap
@@ -58,8 +57,8 @@ cm: scala.collection.immutable.Map[Int,List[String]] = Map(1 -> List(1, 11), 2 -
 *can be seen as more efficient replacement for `map().toMap` combination*
 
 ```scala
-scala> val m = List("1" -> "one", "2" -> "two").mapToMap { case (i, s) => i.toInt -> s }
-m: scala.collection.immutable.Map[Int,String] = Map(1 -> one, 2 -> two)
+val m = List("1" -> "one", "2" -> "two").mapToMap { case (i, s) => i.toInt -> s }
+// m: Map[Int, String] = Map(1 -> "one", 2 -> "two")
 ```
 
 ### toMapWithKey
@@ -67,8 +66,8 @@ m: scala.collection.immutable.Map[Int,String] = Map(1 -> one, 2 -> two)
 *since Scala 2.13 can be seen as equivalent to `groupMapReduce(f)(identity)((b,_) => b)`*
 
 ```scala
-scala> val m = List("1", "2", "1").toMapWithKey(_.toInt)
-m: scala.collection.immutable.Map[Int,String] = Map(1 -> 1, 2 -> 2)
+val m = List("1", "2", "1").toMapWithKey(_.toInt)
+// m: Map[Int, String] = Map(1 -> "1", 2 -> "2")
 ```
 
 ### toMapWithValue
@@ -76,8 +75,8 @@ m: scala.collection.immutable.Map[Int,String] = Map(1 -> 1, 2 -> 2)
 *since Scala 2.13 can be seen as equivalent to `groupMapReduce(identity)(f)((b,_) => b)`*
 
 ```scala
-scala> val m = List("1", "2", "1").toMapWithValue(_.toInt)
-m: scala.collection.immutable.Map[String,Int] = Map(1 -> 1, 2 -> 2)
+val m = List("1", "2", "1").toMapWithValue(_.toInt)
+// m: Map[String, Int] = Map("1" -> 1, "2" -> 2)
 ```
 
 ### withFrequency
@@ -85,8 +84,8 @@ m: scala.collection.immutable.Map[String,Int] = Map(1 -> 1, 2 -> 2)
 *since Scala 2.13 can be seen as equivalent to `groupMapReduce(identity)(_ => 1)(_ + _)`*
 
 ```scala
-scala> val fm = List("a", "b", "c", "a", "b", "d").withFrequency
-fm: scala.collection.immutable.Map[String,Int] = Map(a -> 2, b -> 2, c -> 1, d -> 1)
+val fm = List("a", "b", "c", "a", "b", "d").withFrequency
+// fm: Map[String, Int] = Map("a" -> 2, "b" -> 2, "c" -> 1, "d" -> 1)
 ```
 
 ### withFrequencyBy
@@ -94,30 +93,27 @@ fm: scala.collection.immutable.Map[String,Int] = Map(a -> 2, b -> 2, c -> 1, d -
 *since Scala 2.13 can be seen as equivalent to `groupMapReduce(f)(_ => 1)(_ + _)`*
 
 ```scala
-scala> val fm = List("ab", "bc", "cd", "ab", "bc", "de").withFrequencyBy(_.head)
-fm: scala.collection.immutable.Map[Char,Int] = Map(a -> 2, b -> 2, c -> 1, d -> 1)
+val fm = List("ab", "bc", "cd", "ab", "bc", "de").withFrequencyBy(_.head)
+// fm: Map[Char, Int] = Map('a' -> 2, 'b' -> 2, 'c' -> 1, 'd' -> 1)
 ```
 
 ### mergedWith
 
 Merges two maps using provided function to merge values for duplicate keys
 ```scala
-scala> val merged = Map("1" -> 1, "2" -> 2).mergedWith(Map("1" -> 1, "2" -> 2))(_ + _)
-merged: scala.collection.immutable.Map[String,Int] = Map(1 -> 2, 2 -> 4)
+val merged = Map("1" -> 1, "2" -> 2).mergedWith(Map("1" -> 1, "2" -> 2))(_ + _)
+// merged: Map[String, Int] = Map("1" -> 2, "2" -> 4)
 ```
 
 ### minOption/minOptionBy
 
 Finds the smallest element wrapped in `Option` or `None` if iterable is empty
 ```scala
-scala> val m = List.empty[Int].minOption
-m: Option[Int] = None
+val m1 = List.empty[Int].minOption
+// m1: Option[Int] = None
 
-scala> val m = List(1,2,1).minOptionBy(_ * -1)
-       val m = List(1,2,1).minOptionBy(_ * -1)
-                           ^
-On line 2: warning: method minOptionBy in class IterableOpsExtension is deprecated (since 0.3.0): Use minByOption from standard library
-m: Option[Int] = Some(2)
+val m2 = List(1,2,1).minOptionBy(_ * -1)
+// m2: Option[Int] = Some(value = 2)
 ```
 
 *NOTE: Since Scala 2.13 this is available in standard library*
@@ -126,14 +122,11 @@ m: Option[Int] = Some(2)
 
 Finds the largest element wrapped in `Option` or `None` if iterable is empty
 ```scala
-scala> val m = List.empty[Int].maxOption
-m: Option[Int] = None
+val m1 = List.empty[Int].maxOption
+// m1: Option[Int] = None
 
-scala> val m = List(1,2,1).maxOptionBy(_ * -1)
-       val m = List(1,2,1).maxOptionBy(_ * -1)
-                           ^
-On line 2: warning: method maxOptionBy in class IterableOpsExtension is deprecated (since 0.3.0): Use maxByOption from standard library
-m: Option[Int] = Some(1)
+val m2 = List(1,2,1).maxOptionBy(_ * -1)
+// m2: Option[Int] = Some(value = 1)
 ```
 
 *NOTE: Since Scala 2.13 this is available in standard library*
@@ -142,118 +135,109 @@ m: Option[Int] = Some(1)
 
 An import needed for examples to work:
 ```scala
-scala> import com.daodecode.scalax._
 import com.daodecode.scalax._
 ```
 ### NonEmptyString
 
 ```scala
-scala> NonEmptyString(null)
-res0: Option[String] = None
+NonEmptyString(null)
+// res0: Option[String] = None
+NonEmptyString("")
+// res1: Option[String] = None
+NonEmptyString(" a ")
+// res2: Option[String] = Some(value = " a ")
 
-scala> NonEmptyString("")
-res1: Option[String] = None
+(null: String) match {
+  case NonEmptyString(_) => "boo" 
+  case _ => "works!"
+}
+// res3: String = "works!"
 
-scala> NonEmptyString(" a ")
-res2: Option[String] = Some( a )
+"" match {
+  case NonEmptyString(_) => "boo" 
+  case _ => "works!"
+}
+// res4: String = "works!"
 
-scala> (null: String) match {
-     |   case NonEmptyString(_) => "boo" 
-     |   case _ => "works!"
-     | }
-res3: String = works!
-
-scala> "" match {
-     |   case NonEmptyString(_) => "boo" 
-     |   case _ => "works!"
-     | }
-res4: String = works!
-
-scala> "works!" match {
-     |   case NonEmptyString(s) => s 
-     |   case _ => "boo"
-     | }
-res5: String = works!
+"works!" match {
+  case NonEmptyString(s) => s 
+  case _ => "boo"
+}
+// res5: String = "works!"
 ```
 
 ### NonBlankString
 
 ```scala
-scala> NonBlankString(null)
-res6: Option[String] = None
+NonBlankString(null)
+// res6: Option[String] = None
+NonBlankString("")
+// res7: Option[String] = None
+NonBlankString(" \n \r \t ")
+// res8: Option[String] = None
+NonBlankString(" a ")
+// res9: Option[String] = Some(value = " a ")
 
-scala> NonBlankString("")
-res7: Option[String] = None
+(null: String) match {
+  case NonBlankString(_) => "boo" 
+  case _ => "works!"
+}
+// res10: String = "works!"
 
-scala> NonBlankString(" \n \r \t ")
-res8: Option[String] = None
+"" match {
+  case NonBlankString(_) => "boo" 
+  case _ => "works!"
+}
+// res11: String = "works!"
 
-scala> NonBlankString(" a ")
-res9: Option[String] = Some( a )
+"   \t " match {
+  case NonBlankString(_) => "boo" 
+  case _ => "works!"
+}
+// res12: String = "works!"
 
-scala> (null: String) match {
-     |   case NonBlankString(_) => "boo" 
-     |   case _ => "works!"
-     | }
-res10: String = works!
-
-scala> "" match {
-     |   case NonBlankString(_) => "boo" 
-     |   case _ => "works!"
-     | }
-res11: String = works!
-
-scala> "   \t " match {
-     |   case NonBlankString(_) => "boo" 
-     |   case _ => "works!"
-     | }
-res12: String = works!
-
-scala> "works!" match {
-     |   case NonBlankString(s) => s 
-     |   case _ => "boo"
-     | }
-res13: String = works!
+"works!" match {
+  case NonBlankString(s) => s 
+  case _ => "boo"
+}
+// res13: String = "works!"
 ```
 
 ### NonBlankTrimmedString
 
 ```scala
-scala> NonBlankTrimmedString(null)
-res14: Option[String] = None
+NonBlankTrimmedString(null)
+// res14: Option[String] = None
+NonBlankTrimmedString("")
+// res15: Option[String] = None
+NonBlankTrimmedString(" \n \r \t ")
+// res16: Option[String] = None
+NonBlankTrimmedString(" a ")
+// res17: Option[String] = Some(value = "a")
 
-scala> NonBlankTrimmedString("")
-res15: Option[String] = None
+(null: String) match {
+  case NonBlankTrimmedString(_) => "boo" 
+  case _ => "works!"
+}
+// res18: String = "works!"
 
-scala> NonBlankTrimmedString(" \n \r \t ")
-res16: Option[String] = None
+"" match {
+  case NonBlankTrimmedString(_) => "boo" 
+  case _ => "works!"
+}
+// res19: String = "works!"
 
-scala> NonBlankTrimmedString(" a ")
-res17: Option[String] = Some(a)
+"   \t " match {
+  case NonBlankTrimmedString(_) => "boo" 
+  case _ => "works!"
+}
+// res20: String = "works!"
 
-scala> (null: String) match {
-     |   case NonBlankTrimmedString(_) => "boo" 
-     |   case _ => "works!"
-     | }
-res18: String = works!
-
-scala> "" match {
-     |   case NonBlankTrimmedString(_) => "boo" 
-     |   case _ => "works!"
-     | }
-res19: String = works!
-
-scala> "   \t " match {
-     |   case NonBlankTrimmedString(_) => "boo" 
-     |   case _ => "works!"
-     | }
-res20: String = works!
-
-scala> "  works!\n  " match {
-     |   case NonBlankTrimmedString(s) => s 
-     |   case _ => "boo"
-     | }
-res21: String = works!
+"  works!\n  " match {
+  case NonBlankTrimmedString(s) => s 
+  case _ => "boo"
+}
+// res21: String = "works!"
 ```
 
 ## Latest stable release
