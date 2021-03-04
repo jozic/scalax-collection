@@ -235,6 +235,90 @@ package object extensions {
     def minOptionBy[B: Ordering](f: A => B): Option[A] =
       iterableOps.minByOption(f)
 
+
+    /** Converts this iterable of Tuple4 into four collections of the first, second,
+      *  third and fourth element of each Tuple4.
+      *
+      * Example:
+      *    {{{
+      *    scala> List((1, "one", '1', 1d), (2, "two", '2', 2d), (3, "three", '3', 3d), (4, "four", '4', 4d)).unzip4
+      *    res1: (List[Int], List[String], List[Char], List[Double]) = (List(1, 2, 3, 4),List(one, two, three, four),List(1, 2, 3, 4),List(1.0, 2.0, 3.0, 4.0))
+      *    }}}
+      *
+      *  @tparam A1       the type of the first member of the Tuple4 element
+      *  @tparam A2       the type of the second member of the Tuple4 element
+      *  @tparam A3       the type of the third member of the Tuple4 element
+      *  @tparam A4       the type of the fourth member of the Tuple4 element
+      *  @param asTuple4  an implicit conversion which asserts that the element type
+      *                   of this iterable is a Tuple4.
+      *  @return          a Tuple4 of iterables, containing the first, second, third and forth
+      *                   member of each Tuple4 element of this iterable.
+      *  @since 0.3.2
+      */
+    def unzip4[A1, A2, A3, A4](implicit asTuple4: A => (A1, A2, A3, A4)): (CC[A1], CC[A2], CC[A3], CC[A4]) = (
+      iterableOps.iterableFactory.from(new View.Map[A, A1](iterableOps, asTuple4(_)._1)),
+      iterableOps.iterableFactory.from(new View.Map[A, A2](iterableOps, asTuple4(_)._2)),
+      iterableOps.iterableFactory.from(new View.Map[A, A3](iterableOps, asTuple4(_)._3)),
+      iterableOps.iterableFactory.from(new View.Map[A, A4](iterableOps, asTuple4(_)._4))
+    )
+
+    /** Converts this iterable of Tuple5 into five collections of the first, second,
+      *  third, fourth and fifth element of each Tuple5.
+      *
+      * Example:
+      *    {{{
+      *    scala> List((1, "one", '1', 1d, 1L), (2, "two", '2', 2d, 2L), (3, "three", '3', 3d, 3L), (4, "four", '4', 4d, 4L), (5, "five", '5', 5d, 5L)).unzip5
+      *    res1: (List[Int], List[String], List[Char], List[Double], List[Long]) = (List(1, 2, 3, 4, 5),List(one, two, three, four, five),List(1, 2, 3, 4, 5),List(1.0, 2.0, 3.0, 4.0, 5.0),List(1, 2, 3, 4, 5))
+      *    }}}
+      *
+      *  @tparam A1       the type of the first member of the Tuple5 element
+      *  @tparam A2       the type of the second member of the Tuple5 element
+      *  @tparam A3       the type of the third member of the Tuple5 element
+      *  @tparam A4       the type of the fourth member of the Tuple5 element
+      *  @tparam A5       the type of the fifth member of the Tuple5 element
+      *  @param asTuple5  an implicit conversion which asserts that the element type
+      *                   of this iterable is a Tuple5.
+      *  @return          a Tuple5 of iterables, containing the first, second, third,
+      *                   forth and fifth member of each Tuple5 element of this iterable.
+      *  @since 0.3.2
+      */
+    def unzip5[A1, A2, A3, A4, A5](implicit asTuple5: A => (A1, A2, A3, A4, A5)): (CC[A1], CC[A2], CC[A3], CC[A4], CC[A5]) = (
+      iterableOps.iterableFactory.from(new View.Map[A, A1](iterableOps, asTuple5(_)._1)),
+      iterableOps.iterableFactory.from(new View.Map[A, A2](iterableOps, asTuple5(_)._2)),
+      iterableOps.iterableFactory.from(new View.Map[A, A3](iterableOps, asTuple5(_)._3)),
+      iterableOps.iterableFactory.from(new View.Map[A, A4](iterableOps, asTuple5(_)._4)),
+      iterableOps.iterableFactory.from(new View.Map[A, A5](iterableOps, asTuple5(_)._5))
+    )
+    /** Converts this iterable of Tuple6 into five collections of the first, second,
+      *  third, fourth, fifth and sixth element of each Tuple6.
+      *
+      * Example:
+      *    {{{
+      *    scala> List((1, "one", '1', 1d, 1L, true), (2, "two", '2', 2d, 2L, false), (3, "three", '3', 3d, 3L, true), (4, "four", '4', 4d, 4L, false), (5, "five", '5', 5d, 5L, true), (6, "six", '6', 6d, 6L, false)).unzip6
+      *    res0: (List[Int], List[String], List[Char], List[Double], List[Long], List[Boolean]) = (List(1, 2, 3, 4, 5, 6),List(one, two, three, four, five, six),List(1, 2, 3, 4, 5, 6),List(1.0, 2.0, 3.0, 4.0, 5.0, 6.0),List(1, 2, 3, 4, 5, 6),List(true, false, true, false, true, false))
+      *    }}}
+      *
+      *  @tparam A1       the type of the first member of the Tuple6 element
+      *  @tparam A2       the type of the second member of the Tuple6 element
+      *  @tparam A3       the type of the third member of the Tuple6 element
+      *  @tparam A4       the type of the fourth member of the Tuple6 element
+      *  @tparam A5       the type of the fifth member of the Tuple6 element
+      *  @tparam A6       the type of the sixth member of the Tuple6 element
+      *  @param asTuple6  an implicit conversion which asserts that the element type
+      *                   of this iterable is a Tuple6.
+      *  @return          a Tuple6 of iterables, containing the first, second, third,
+      *                   forth, fifth and sixth member of each Tuple6 element of this iterable.
+      *  @since 0.3.2
+      */
+    def unzip6[A1, A2, A3, A4, A5, A6](implicit asTuple6: A => (A1, A2, A3, A4, A5, A6)): (CC[A1], CC[A2], CC[A3], CC[A4], CC[A5], CC[A6]) = (
+      iterableOps.iterableFactory.from(new View.Map[A, A1](iterableOps, asTuple6(_)._1)),
+      iterableOps.iterableFactory.from(new View.Map[A, A2](iterableOps, asTuple6(_)._2)),
+      iterableOps.iterableFactory.from(new View.Map[A, A3](iterableOps, asTuple6(_)._3)),
+      iterableOps.iterableFactory.from(new View.Map[A, A4](iterableOps, asTuple6(_)._4)),
+      iterableOps.iterableFactory.from(new View.Map[A, A5](iterableOps, asTuple6(_)._5)),
+      iterableOps.iterableFactory.from(new View.Map[A, A6](iterableOps, asTuple6(_)._6))
+    )
+
   }
 
   implicit class MapOpsExtension[K, V, CC[_, _] <: IterableOps[_, Any, _], C](val mapOps: MapOps[K, V, CC, C])

@@ -117,6 +117,20 @@ val m2 = List(1,2,1).maxOptionBy(_ * -1)
 
 *NOTE: Since Scala 2.13 this is available in standard library*
 
+### unzip4/unzip5/unzip6
+
+Similar to `unzip` and `unzip3` from standard library, but for tuples of higher arity (up to 6) 
+
+```scala mdoc:nest
+val (ints, strings, chars, doubles) = 
+  Iterable(
+    (1, "one", '1', 1d),
+    (2, "two", '2', 2d),
+    (3, "three", '3', 3d),
+    (4, "four", '4', 4d)
+  ).unzip4
+```
+
 ## Strings Examples
 
 An import needed for examples to work:
@@ -208,7 +222,7 @@ NonBlankTrimmedString(" a ")
 
 ### sbt
 ```scala
-libraryDependencies += "com.daodecode" %% "scalax-collection" % "0.3.0"
+libraryDependencies += "com.daodecode" %% "scalax-collection" % "0.3.2"
 ```
 ### maven
 
@@ -226,6 +240,6 @@ set `<scala.binary.version>` property to scala version you need, like
 <dependency>
     <groupId>com.daodecode</groupId>
     <artifactId>scalax-collection_${scala.binary.version}</artifactId>
-    <version>0.3.0</version>
+    <version>0.3.2</version>
 </dependency>
 ```
