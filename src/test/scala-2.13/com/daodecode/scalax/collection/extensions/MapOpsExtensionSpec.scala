@@ -54,7 +54,7 @@ class MapOpsExtensionSpec extends FlatSpec with Matchers {
   }
 
   it should "pass value from original map as a first argument to merge function" in {
-    Map("1" -> 1, "2" -> 2).mergedWith(Map("1" -> 2, "2" -> 1))((a, b) => a) should be(
+    Map("1" -> 1, "2" -> 2).mergedWith(Map("1" -> 2, "2" -> 1))((a, _) => a) should be(
       Map("1" -> 1, "2" -> 2))
   }
 

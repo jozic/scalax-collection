@@ -1,7 +1,8 @@
 package com.daodecode.scalax.collection
 
 import scala.collection._
-import scala.collection.generic.CanBuildFrom
+import scala.collection.generic.{CanBuildFrom, GenericTraversableTemplate}
+import scala.language.higherKinds
 
 package object extensions {
 
@@ -311,6 +312,123 @@ package object extensions {
       if (iterableLike.isEmpty) None
       else Some(iterableLike.minBy(f))
 
+  }
+
+  implicit class GenericTraversableTemplateExtension[+A, +CC[X] <: GenTraversable[X]](val t: GenericTraversableTemplate[A, CC]) extends AnyVal {
+
+    /** Converts this iterable of Tuple4 into four collections of the first, second,
+      *  third and fourth element of each Tuple4.
+      *
+      * Example:
+      *    {{{
+      *    scala> List((1, "one", '1', 1d), (2, "two", '2', 2d), (3, "three", '3', 3d), (4, "four", '4', 4d)).unzip4
+      *    res1: (List[Int], List[String], List[Char], List[Double]) = (List(1, 2, 3, 4),List(one, two, three, four),List(1, 2, 3, 4),List(1.0, 2.0, 3.0, 4.0))
+      *    }}}
+      *
+      *  @tparam A1       the type of the first member of the Tuple4 element
+      *  @tparam A2       the type of the second member of the Tuple4 element
+      *  @tparam A3       the type of the third member of the Tuple4 element
+      *  @tparam A4       the type of the fourth member of the Tuple4 element
+      *  @param asTuple4  an implicit conversion which asserts that the element type
+      *                   of this iterable is a Tuple4.
+      *  @return          a Tuple4 of iterables, containing the first, second, third and forth
+      *                   member of each Tuple4 element of this iterable.
+      *  @since 0.3.2
+      */
+    def unzip4[A1, A2, A3, A4](implicit asTuple4: A => (A1, A2, A3, A4)): (CC[A1], CC[A2], CC[A3], CC[A4]) = {
+      val as = t.genericBuilder[A1]
+      val bs = t.genericBuilder[A2]
+      val cs = t.genericBuilder[A3]
+      val ds = t.genericBuilder[A4]
+
+      for (elem <- t) {
+        val (a, b, c, d) = asTuple4(elem)
+        as += a
+        bs += b
+        cs += c
+        ds += d
+      }
+      (as.result(), bs.result(), cs.result(), ds.result())
+    }
+
+    /** Converts this iterable of Tuple5 into five collections of the first, second,
+      *  third, fourth and fifth element of each Tuple5.
+      *
+      * Example:
+      *    {{{
+      *    scala> List((1, "one", '1', 1d, 1L), (2, "two", '2', 2d, 2L), (3, "three", '3', 3d, 3L), (4, "four", '4', 4d, 4L), (5, "five", '5', 5d, 5L)).unzip5
+      *    res1: (List[Int], List[String], List[Char], List[Double], List[Long]) = (List(1, 2, 3, 4, 5),List(one, two, three, four, five),List(1, 2, 3, 4, 5),List(1.0, 2.0, 3.0, 4.0, 5.0),List(1, 2, 3, 4, 5))
+      *    }}}
+      *
+      *  @tparam A1       the type of the first member of the Tuple5 element
+      *  @tparam A2       the type of the second member of the Tuple5 element
+      *  @tparam A3       the type of the third member of the Tuple5 element
+      *  @tparam A4       the type of the fourth member of the Tuple5 element
+      *  @tparam A5       the type of the fifth member of the Tuple5 element
+      *  @param asTuple5  an implicit conversion which asserts that the element type
+      *                   of this iterable is a Tuple5.
+      *  @return          a Tuple5 of iterables, containing the first, second, third,
+      *                   forth and fifth member of each Tuple5 element of this iterable.
+      *  @since 0.3.2
+      */
+    def unzip5[A1, A2, A3, A4, A5](implicit asTuple5: A => (A1, A2, A3, A4, A5)): (CC[A1], CC[A2], CC[A3], CC[A4], CC[A5]) = {
+      val as = t.genericBuilder[A1]
+      val bs = t.genericBuilder[A2]
+      val cs = t.genericBuilder[A3]
+      val ds = t.genericBuilder[A4]
+      val es = t.genericBuilder[A5]
+
+      for (elem <- t) {
+        val (a, b, c, d, e) = asTuple5(elem)
+        as += a
+        bs += b
+        cs += c
+        ds += d
+        es += e
+      }
+      (as.result(), bs.result(), cs.result(), ds.result(), es.result())
+    }
+
+    /** Converts this iterable of Tuple6 into five collections of the first, second,
+      *  third, fourth, fifth and sixth element of each Tuple6.
+      *
+      * Example:
+      *    {{{
+      *    scala> List((1, "one", '1', 1d, 1L, true), (2, "two", '2', 2d, 2L, false), (3, "three", '3', 3d, 3L, true), (4, "four", '4', 4d, 4L, false), (5, "five", '5', 5d, 5L, true), (6, "six", '6', 6d, 6L, false)).unzip6
+      *    res0: (List[Int], List[String], List[Char], List[Double], List[Long], List[Boolean]) = (List(1, 2, 3, 4, 5, 6),List(one, two, three, four, five, six),List(1, 2, 3, 4, 5, 6),List(1.0, 2.0, 3.0, 4.0, 5.0, 6.0),List(1, 2, 3, 4, 5, 6),List(true, false, true, false, true, false))
+      *    }}}
+      *
+      *  @tparam A1       the type of the first member of the Tuple6 element
+      *  @tparam A2       the type of the second member of the Tuple6 element
+      *  @tparam A3       the type of the third member of the Tuple6 element
+      *  @tparam A4       the type of the fourth member of the Tuple6 element
+      *  @tparam A5       the type of the fifth member of the Tuple6 element
+      *  @tparam A6       the type of the sixth member of the Tuple6 element
+      *  @param asTuple6  an implicit conversion which asserts that the element type
+      *                   of this iterable is a Tuple6.
+      *  @return          a Tuple6 of iterables, containing the first, second, third,
+      *                   forth, fifth and sixth member of each Tuple6 element of this iterable.
+      *  @since 0.3.2
+      */
+    def unzip6[A1, A2, A3, A4, A5, A6](implicit asTuple6: A => (A1, A2, A3, A4, A5, A6)): (CC[A1], CC[A2], CC[A3], CC[A4], CC[A5], CC[A6]) = {
+      val as = t.genericBuilder[A1]
+      val bs = t.genericBuilder[A2]
+      val cs = t.genericBuilder[A3]
+      val ds = t.genericBuilder[A4]
+      val es = t.genericBuilder[A5]
+      val fs = t.genericBuilder[A6]
+
+      for (elem <- t) {
+        val (a, b, c, d, e, f) = asTuple6(elem)
+        as += a
+        bs += b
+        cs += c
+        ds += d
+        es += e
+        fs += f
+      }
+      (as.result(), bs.result(), cs.result(), ds.result(), es.result(), fs.result())
+    }
   }
 
   implicit class MapLikeExtension[K, V, Repr <: MapLike[K, V, Repr] with Map[K, V]]

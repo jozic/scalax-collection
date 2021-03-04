@@ -41,6 +41,6 @@ class SeqLikeExtensionSpec extends FlatSpec with Matchers {
     val people = Seq(eugeneM, xeniya, eugeneP, vasiliy)
 
     people.distinctByUsing(_.fName, (_,_) => true) should be(Seq(eugeneM, xeniya, vasiliy))
-    people.distinctByUsing(_.fName, (p1, p2) => p1.lName == "Platonov") should be(Seq(eugeneP, xeniya, vasiliy))
+    people.distinctByUsing(_.fName, (p1, _) => p1.lName == "Platonov") should be(Seq(eugeneP, xeniya, vasiliy))
   }
 }

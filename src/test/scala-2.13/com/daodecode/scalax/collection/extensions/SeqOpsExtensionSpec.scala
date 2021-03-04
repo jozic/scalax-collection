@@ -37,6 +37,6 @@ class SeqOpsExtensionSpec extends FlatSpec with Matchers {
 
     people.distinctByUsing(_.fName, alwaysFirst) should be(Seq(eugeneM, xeniya, vasiliy))
 
-    people.distinctByUsing(_.fName, (p1, p2) => p1.lName == "Platonov") should be(Seq(eugeneP, xeniya, vasiliy))
+    people.distinctByUsing(_.fName, (p1, _) => p1.lName == "Platonov") should be(Seq(eugeneP, xeniya, vasiliy))
   }
 }

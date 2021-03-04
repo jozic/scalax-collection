@@ -133,4 +133,47 @@ class IterableLikeExtensionSpec extends FlatSpec with Matchers {
     Iterable(A(2), A(1), A(3)).maxOptionBy(_.i) should be(Some(A(3)))
   }
 
+  "unzip4" should "properly unzip" in {
+    val (ints, strings, chars, doubles) =
+      Set((1, "one", '1', 1d), (2, "two", '2', 2d), (3, "three", '3', 3d), (4, "four", '4', 4d)).unzip4
+    ints should be(Set(1, 2, 3, 4))
+    strings should be(Set("one", "two", "three", "four"))
+    chars should be(Set('1', '2', '3', '4'))
+    doubles should be(Set(1d, 2d, 3d, 4d))
+  }
+
+  "unzip5" should "properly unzip" in {
+    val (ints, strings, chars, doubles, longs) =
+      Iterable(
+        (1, "one", '1', 1d, 1L),
+        (2, "two", '2', 2d, 2L),
+        (3, "three", '3', 3d, 3L),
+        (4, "four", '4', 4d, 4L),
+        (5, "five", '5', 5d, 5L)
+      ).unzip5
+    ints should be(Iterable(1, 2, 3, 4, 5))
+    strings should be(Iterable("one", "two", "three", "four", "five"))
+    chars should be(Iterable('1', '2', '3', '4', '5'))
+    doubles should be(Iterable(1d, 2d, 3d, 4d, 5d))
+    longs should be(Iterable(1L, 2L, 3L, 4L, 5L))
+  }
+
+  "unzip6" should "properly unzip" in {
+    val (ints, strings, chars, doubles, longs, booleans) =
+      Vector(
+        (1, "one", '1', 1d, 1L, true),
+        (2, "two", '2', 2d, 2L, false),
+        (3, "three", '3', 3d, 3L, true),
+        (4, "four", '4', 4d, 4L, false),
+        (5, "five", '5', 5d, 5L, true),
+        (6, "six", '6', 6d, 6L, false)
+      ).unzip6
+    ints should be(Vector(1, 2, 3, 4, 5, 6))
+    strings should be(Vector("one", "two", "three", "four", "five", "six"))
+    chars should be(Vector('1', '2', '3', '4', '5', '6'))
+    doubles should be(Vector(1d, 2d, 3d, 4d, 5d, 6d))
+    longs should be(Vector(1L, 2L, 3L, 4L, 5L, 6L))
+    booleans should be(Vector(true, false, true, false, true, false))
+  }
+
 }
