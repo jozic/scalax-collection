@@ -1,10 +1,8 @@
 package com.daodecode.scalax.collection
 
-import scala.collection.{immutable, mutable, BuildFrom, IterableOps, MapOps}
+import scala.annotation.nowarn
 import scala.collection.immutable.SeqOps
-import scala.language.higherKinds
-
-import com.github.ghik.silencer.silent
+import scala.collection.{BuildFrom, IterableOps, MapOps, View, immutable, mutable}
 
 package object extensions {
 
@@ -37,7 +35,7 @@ package object extensions {
           case _ => seen += fx -> x
         }
       }
-      bf.fromSpecific(seqOps.repr)(seen.values): @silent("deprecated")
+      bf.fromSpecific(seqOps.repr)(seen.values): @nowarn("cat=deprecation")
     }
   }
 

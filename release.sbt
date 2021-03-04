@@ -7,7 +7,7 @@ releaseProcess := Seq[ReleaseStep](
   inquireVersions,
   runClean,
   runTest,
-  releaseStepCommand("tut"),
+  releaseStepCommand("mdoc"),
   setReleaseVersion,
   commitReleaseVersion,
   tagRelease,

@@ -2,9 +2,9 @@ name := "scalax-collection"
 
 organization := "com.daodecode"
 
-scalaVersion := "2.13.0"
+scalaVersion := "2.13.5"
 
-crossScalaVersions := Seq("2.12.9", scalaVersion.value)
+crossScalaVersions := Seq("2.12.13", scalaVersion.value)
 
 scalacOptions := Seq(
   "-Xlint",
@@ -25,19 +25,13 @@ scalacOptions := Seq(
     "-Ywarn-unused-import"
   ) else Seq.empty)
 
-val silencerVersion ="1.4.3"
-
 libraryDependencies ++= Seq(
-  compilerPlugin("com.github.ghik" % "silencer-plugin" % silencerVersion cross CrossVersion.full),
-  "com.github.ghik" % "silencer-lib" % silencerVersion % Provided cross CrossVersion.full,
-  "org.scalatest" %% "scalatest" % "3.0.8" % "test"
+  "org.scalatest" %% "scalatest" % "3.0.9" % "test"
 )
 
-def filterOutUnusedImports(options: Seq[String]) =
+def filterOutUnusedImports(options: Seq[String]): Seq[String] =
   options.filterNot(Set("-Ywarn-unused", "-Ywarn-unused-import", "-Xlint")) ++
     Seq("-Xlint:-unused", "-Ywarn-unused:-imports,_")
-
-scalacOptions in Tut := filterOutUnusedImports(scalacOptions.value)
 
 scalacOptions in(Compile, console) := filterOutUnusedImports(scalacOptions.value)
 
