@@ -1,0 +1,30 @@
+name: build
+
+on:
+  push:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        java:
+          - adopt@1.8.0-292
+          - graalvm-ce-java11
+      fail-fast: false
+    steps:
+      - name: Configure git
+        run: "git config --global core.autocrlf false"
+        shell: bash
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 300
+      - name: Fetch tags
+        run: git fetch --depth=300 origin +refs/tags/*:refs/tags/*
+      - uses: coursier/cache-action@v6
+      - uses: olafurpg/setup-scala@v13
+        with:
+          java-version: ${{ matrix.java }}
+      - name: Test coverage and docs
+        run: "sbt +scoverage docs/mdoc"
+        shell: bash

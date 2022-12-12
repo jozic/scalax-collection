@@ -1,10 +1,8 @@
 package com.daodecode.scalax
 
-import org.scalatest.{FlatSpec, Matchers}
-
 import scala.util.Random
 
-class NonBlankTrimmedStringSpec extends FlatSpec with Matchers {
+class NonBlankTrimmedStringSpec extends ScalaxFlatSpec {
 
   "NonBlankTrimmedString" should "return Some trimmed string for non blank string" in {
     def randomWord =
