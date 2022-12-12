@@ -1,10 +1,9 @@
-package com.daodecode.scalax.collection.extensions
-
-import org.scalatest.{FlatSpec, Matchers}
+package com.daodecode.scalax
+package collection.extensions
 
 import scala.collection.mutable.ListBuffer
 
-class IterableOpsExtensionSpec extends FlatSpec with Matchers {
+class IterableOpsExtensionSpec extends ScalaxFlatSpec {
 
   "foldLeftWhile" should "behave as regular foldLeft if while condition is true" in {
 

@@ -1,10 +1,9 @@
-package com.daodecode.scalax.collection.extensions
-
-import org.scalatest.{Matchers, FlatSpec}
+package com.daodecode.scalax
+package collection.extensions
 
 import scala.collection._
 
-class MapLikeExtensionSpec extends FlatSpec with Matchers {
+class MapLikeExtensionSpec extends ScalaxFlatSpec {
 
   "mergeWith" should "merge empty maps" in {
     Map.empty[String, Int].mergedWith(Map.empty[String, Int])(_ + _) should be(Map.empty[String, Int])
