@@ -1,8 +1,8 @@
 package com.daodecode.scalax.collection.extensions
 
-import org.scalatest.{FlatSpec, Matchers}
-
 import scala.collection.mutable.ListBuffer
+
+import org.scalatest.{FlatSpec, Matchers}
 
 class IterableOpsExtensionSpec extends FlatSpec with Matchers {
 
@@ -158,5 +158,71 @@ class IterableOpsExtensionSpec extends FlatSpec with Matchers {
     doubles should be(Vector(1d, 2d, 3d, 4d, 5d, 6d))
     longs should be(Vector(1L, 2L, 3L, 4L, 5L, 6L))
     booleans should be(Vector(true, false, true, false, true, false))
+  }
+
+  "unzip7" should "properly unzip" in {
+    val (ints, strings, chars, doubles, longs, booleans, floats) =
+      Vector(
+        (1, "one", '1', 1d, 1L, true, 1f),
+        (2, "two", '2', 2d, 2L, false, 2f),
+        (3, "three", '3', 3d, 3L, true, 3f ),
+        (4, "four", '4', 4d, 4L, false, 4f),
+        (5, "five", '5', 5d, 5L, true, 5f),
+        (6, "six", '6', 6d, 6L, false, 6f),
+        (7, "seven", '7', 7d, 7L, true, 7f)
+      ).unzip7
+    ints should be(Vector(1, 2, 3, 4, 5, 6, 7))
+    strings should be(Vector("one", "two", "three", "four", "five", "six", "seven"))
+    chars should be(Vector('1', '2', '3', '4', '5', '6', '7'))
+    doubles should be(Vector(1d, 2d, 3d, 4d, 5d, 6d, 7d))
+    longs should be(Vector(1L, 2L, 3L, 4L, 5L, 6L, 7L))
+    booleans should be(Vector(true, false, true, false, true, false, true))
+    floats should be(Vector(1f, 2f, 3f, 4f, 5f, 6f, 7f))
+  }
+
+  "unzip8" should "properly unzip" in {
+    val (ints, strings, chars, doubles, longs, booleans, floats, shorts) =
+      Vector(
+        (1, "one", '1', 1d, 1L, true, 1f, 1: Short),
+        (2, "two", '2', 2d, 2L, false, 2f, 2: Short),
+        (3, "three", '3', 3d, 3L, true, 3f, 3: Short),
+        (4, "four", '4', 4d, 4L, false, 4f, 4: Short),
+        (5, "five", '5', 5d, 5L, true, 5f, 5: Short),
+        (6, "six", '6', 6d, 6L, false, 6f, 6: Short),
+        (7, "seven", '7', 7d, 7L, true, 7f, 7: Short ),
+        (8, "eight", '8', 8d, 8L, false, 8f, 8: Short),
+      ).unzip8
+    ints should be(Vector(1, 2, 3, 4, 5, 6, 7, 8))
+    strings should be(Vector("one", "two", "three", "four", "five", "six", "seven", "eight"))
+    chars should be(Vector('1', '2', '3', '4', '5', '6', '7', '8'))
+    doubles should be(Vector(1d, 2d, 3d, 4d, 5d, 6d, 7d, 8d))
+    longs should be(Vector(1L, 2L, 3L, 4L, 5L, 6L, 7L, 8L))
+    booleans should be(Vector(true, false, true, false, true, false, true, false))
+    floats should be(Vector(1f, 2f, 3f, 4f, 5f, 6f, 7f, 8f))
+    shorts should be(Vector[Short](1, 2, 3, 4, 5, 6, 7, 8))
+  }
+
+  "unzip9" should "properly unzip" in {
+    val (ints, strings, chars, doubles, longs, booleans, floats, shorts, bytes) =
+      Vector(
+        (1, "one", '1', 1d, 1L, true, 1f, 1: Short, 1: Byte),
+        (2, "two", '2', 2d, 2L, false, 2f, 2: Short, 2: Byte),
+        (3, "three", '3', 3d, 3L, true, 3f, 3: Short, 3: Byte),
+        (4, "four", '4', 4d, 4L, false, 4f, 4: Short, 4: Byte),
+        (5, "five", '5', 5d, 5L, true, 5f, 5: Short, 5: Byte),
+        (6, "six", '6', 6d, 6L, false, 6f, 6: Short, 6: Byte),
+        (7, "seven", '7', 7d, 7L, true, 7f, 7: Short, 7: Byte ),
+        (8, "eight", '8', 8d, 8L, false, 8f, 8: Short, 8: Byte),
+        (9, "nine", '9', 9d, 9L, true, 9f, 9: Short, 9: Byte)
+      ).unzip9
+    ints should be(Vector(1, 2, 3, 4, 5, 6, 7, 8, 9))
+    strings should be(Vector("one", "two", "three", "four", "five", "six", "seven", "eight", "nine"))
+    chars should be(Vector('1', '2', '3', '4', '5', '6', '7', '8', '9'))
+    doubles should be(Vector(1d, 2d, 3d, 4d, 5d, 6d, 7d, 8d, 9d))
+    longs should be(Vector(1L, 2L, 3L, 4L, 5L, 6L, 7L, 8L, 9L))
+    booleans should be(Vector(true, false, true, false, true, false, true, false, true))
+    floats should be(Vector(1f, 2f, 3f, 4f, 5f, 6f, 7f, 8f, 9f))
+    shorts should be(Vector[Short](1, 2, 3, 4, 5, 6, 7, 8, 9))
+    bytes should be(Vector[Byte](1, 2, 3, 4, 5, 6, 7, 8, 9))
   }
 }

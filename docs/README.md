@@ -117,9 +117,9 @@ val m2 = List(1,2,1).maxOptionBy(_ * -1)
 
 *NOTE: Since Scala 2.13 this is available in standard library*
 
-### unzip4/unzip5/unzip6
+### unzip4/unzip5/unzip6/unzip7/unzip8/unzip9
 
-Similar to `unzip` and `unzip3` from standard library, but for tuples of higher arity (up to 6) 
+Similar to `unzip` and `unzip3` from standard library, but for tuples of higher arity (up to 9) 
 
 ```scala mdoc:nest
 val (ints, strings, chars, doubles) = 
