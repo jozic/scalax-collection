@@ -1,7 +1,5 @@
 import scoverage._
 
-CoverallsKeys.coverallsTokenFile := Some("./token.txt")
-
 ScoverageKeys.coverageMinimum := 100
 
 ScoverageKeys.coverageFailOnMinimum := true
