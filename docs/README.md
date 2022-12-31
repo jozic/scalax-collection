@@ -1,4 +1,4 @@
-scalax-collection [![Build Status](https://travis-ci.org/jozic/scalax-collection.svg?branch=main)](https://travis-ci.org/jozic/scalax-collection) [![Coverage Status](https://coveralls.io/repos/jozic/scalax-collection/badge.svg)](https://coveralls.io/r/jozic/scalax-collection)
+scalax-collection [![Build Status](https://github.com/jozic/scalax-collection/actions/workflows/build.yml/badge.svg)](https://github.com/jozic/scalax-collection/actions/workflows/build.yml/badge.svg) [![Coverage Status](https://coveralls.io/repos/jozic/scalax-collection/badge.svg)](https://coveralls.io/r/jozic/scalax-collection)
 =================
 
 A small library of extension methods for standard scala collections library. 
