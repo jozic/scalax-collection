@@ -6,20 +6,22 @@ lazy val `scalax-collection` = project.in(file("."))
 
     organization := "com.daodecode",
 
-    crossScalaVersions := Seq("2.12.17", scalaVersion.value),
+    crossScalaVersions := Seq("2.12.17", scalaVersion.value, "3.2.1"),
 
     scalacOptions := Seq(
-      "-Xlint",
       "-unchecked",
       "-deprecation",
       //  "-Xfatal-warnings",
-      "-Ywarn-dead-code",
       "-feature",
       "-language:postfixOps",
       "-language:implicitConversions",
-      "-Ywarn-unused",
       "-encoding", "UTF-8"
-    ) ++ (if (priorTo2_13(scalaVersion.value))
+    ) ++ (if (priorTo3(scalaVersion.value))
+      Seq(
+        "-Xlint",
+        "-Ywarn-dead-code",
+        "-Ywarn-unused"
+      ) else Seq.empty) ++ (if (priorTo2_13(scalaVersion.value))
       Seq(
         "-Ywarn-inaccessible",
         "-Yno-adapted-args",
@@ -57,5 +59,11 @@ def priorTo2_13(scalaVersion: String): Boolean =
   CrossVersion.partialVersion(scalaVersion) match {
     case Some((2, minor)) if minor < 13 => true
     case _ => false
+  }
+
+def priorTo3(scalaVersion: String): Boolean =
+  CrossVersion.partialVersion(scalaVersion) match {
+    case Some((3, _)) => false
+    case _ => true
   }
 
